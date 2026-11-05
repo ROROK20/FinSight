@@ -1,0 +1,41 @@
+# Pinned 2026-07-29; no pin has moved since. A clean `pip install -r
+# requirements.txt` installs these `==` versions. CI does NOT install this file:
+# .github/workflows/ci.yml runs `pip install -e ".[dev]"`, which resolves the
+# `setup.py` floors, so CI tests the newest versions those floors allow, not
+# these pins. The maintainer runs the suite on an interpreter that matches these
+# pins except starlette (1.2.1 there, not the 1.3.1 pinned below), so no test count
+# here would be a claim about these exact pins either. Each pin is one that
+# `pip-audit` reports as carrying no known advisories (2.10.1 on 2026-11-04, see
+# SECURITY.md). These
+# pins — not `pip install -e .` — are the reproducible install path; `setup.py`
+# keeps version FLOORS so the package stays composable as a library. Re-run
+# `pip-audit -r requirements.txt` after any bump and update SECURITY.md's dated
+# line the same day.
+yfinance==1.4.1
+pandas==3.0.3
+numpy==2.4.6
+requests==2.34.2
+beautifulsoup4==4.14.3
+fastapi==0.136.3
+# starlette is a FastAPI transitive, pinned explicitly: 1.2.1 and older carry
+# PYSEC-2026-248 and PYSEC-2026-249 (fixed in 1.3.0 / 1.3.1), and
+# `fastapi>=0.104` alone permits a vulnerable resolve. Never pin below 1.3.1.
+starlette==1.3.1
+uvicorn==0.49.0
+python-dotenv==1.2.2
+pytest==9.0.3
+pytest-cov==7.1.0
+httpx==0.28.1
+
+# Optional ML / LLM extras: UNPINNED, and large (torch alone is hundreds of MB),
+# so this file is not a fully pinned install; `requirements-api.txt` is, for the
+# runtime. These stay version FLOORS on purpose: they are not
+# installed in the environment the pins above were verified in, and the test
+# suite never exercises them (tests/test_sentiment.py builds
+# `SentimentAnalyzer(use_finbert=False)`), so an exact pin here would assert a
+# combination this repo has never run. Prefer the declared extras —
+# `pip install -e ".[llm]"` / `pip install -e ".[finbert]"` — and pin them
+# yourself once you have a version you have tested.
+openai>=1.12.0
+transformers>=4.36.0
+torch>=2.0.0

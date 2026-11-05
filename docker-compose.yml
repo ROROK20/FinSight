@@ -1,0 +1,58 @@
+# FinSight — full-stack one-command demo.
+#
+#   docker compose up --build
+#
+# Brings up:
+#   * backend  — FastAPI engine on http://localhost:8001 (FINSIGHT_DEMO=1 so it
+#                works with zero network/keys: bundled SEC data for AAPL, MSFT,
+#                NVDA, GOOGL and TSLA through the real DCF engine, sentiment
+#                from a labelled synthetic placeholder transcript;
+#                any other ticker is refused, not looked up live).
+#   * frontend — Next.js dashboard on http://localhost:3002, pointed at the
+#                backend via NEXT_PUBLIC_API_URL.
+#
+# The browser (running on the host) calls http://localhost:8001, which is the
+# host-published backend port — so the public API URL is correct as-is.
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: finsight-api
+    ports:
+      - "8001:8001"
+    environment:
+      # Demo mode is offline: it serves the five bundled tickers and refuses
+      # every other one with a 404 — it never sends a live request. Flip to 0
+      # for the live SEC EDGAR path, which needs network AND your own identity
+      # below.
+      FINSIGHT_DEMO: "1"
+      # Passed through from YOUR shell, empty if you have not set it. There is
+      # deliberately no fallback: an invented contact (e.g. an example.com
+      # address) would send SEC traffic under an identity that reaches nobody,
+      # and the API refuses such values anyway. Live mode only:
+      #   SEC_EDGAR_USER_AGENT="Your Name you@yourdomain" docker compose up
+      SEC_EDGAR_USER_AGENT: ${SEC_EDGAR_USER_AGENT:-}
+      # Off unless you opt in: a third-party scrape, in live mode only.
+      FINSIGHT_LIVE_TRANSCRIPTS: ${FINSIGHT_LIVE_TRANSCRIPTS:-}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8001
+    image: finsight-frontend
+    ports:
+      - "3002:3002"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8001
+    depends_on:
+      - backend

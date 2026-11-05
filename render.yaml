@@ -1,0 +1,27 @@
+# Render blueprint for the FinSight REST API.
+#   https://render.com/docs/blueprint-spec
+#
+# Deploys the FastAPI engine from the root Dockerfile. Ships with
+# FINSIGHT_DEMO=1 so the public demo always works without an SEC network
+# dependency; set it to 0 (and provide SEC_EDGAR_USER_AGENT) to go fully live.
+services:
+  - type: web
+    name: finsight-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    # Deploys are manual (README: "Deploy (do not auto-deploy)").
+    autoDeploy: false
+    envVars:
+      - key: FINSIGHT_DEMO
+        value: "1"
+      # NOTE: no FINSIGHT_PORT here — on Render the Docker CMD binds to
+      # Render's injected $PORT (Dockerfile:31 `${PORT:-8001}`), so setting
+      # FINSIGHT_PORT in this file is a no-op. The variable only matters for
+      # local non-Docker runs (finsight/api/app.py reads it).
+      - key: SEC_EDGAR_USER_AGENT
+        sync: false
+      # No OPENAI_API_KEY: the API reads XBRL only and never calls the LLM
+      # text extractor (a library function), so the key would enable nothing.

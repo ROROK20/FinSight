@@ -1,0 +1,26 @@
+# Slim runtime deps for the FinSight REST API (Docker / demo image).
+# Excludes the heavy optional ML stack (torch, transformers) — without FinBERT
+# the sentiment analyzer uses FinSight's own curated word list alone.
+# Install the full requirements.txt for FinBERT support.
+#
+# Pinned 2026-07-29 to the same `==` set as requirements.txt, and no pin has moved
+# since. Every package here is pinned. CI does NOT install this file: it runs
+# `pip install -e ".[dev]"`, which resolves the `setup.py` floors. The maintainer
+# runs the suite on an interpreter that matches these pins except starlette (1.2.1
+# there, not the 1.3.1 pinned below), so these files state no test count.
+# `pip-audit -r requirements-api.txt` reports no known advisories (2.10.1 on
+# 2026-11-04). The Dockerfile installs this
+# file, so it is the deployed API's reproducible supply chain.
+yfinance==1.4.1
+pandas==3.0.3
+numpy==2.4.6
+requests==2.34.2
+beautifulsoup4==4.14.3
+fastapi==0.136.3
+# Pinned explicitly: starlette 1.2.1 and older carry PYSEC-2026-248 /
+# PYSEC-2026-249 (fixed in 1.3.0 / 1.3.1) and `fastapi>=0.104` alone permits a
+# vulnerable resolve. Never pin below 1.3.1.
+starlette==1.3.1
+uvicorn==0.49.0
+python-dotenv==1.2.2
+httpx==0.28.1

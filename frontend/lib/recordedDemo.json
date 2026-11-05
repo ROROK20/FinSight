@@ -1,0 +1,1645 @@
+{
+ "captured": "2026-11-04",
+ "generator": "scripts/record_demo.py",
+ "snapshot_retrieved": "2026-11-04",
+ "tickers": {
+  "AAPL": {
+   "meta": {
+    "ticker": "AAPL",
+    "mode": "demo",
+    "company_name": "Apple Inc.",
+    "sector": "Technology",
+    "current_price": 344.63,
+    "price_date": "2026-10-30",
+    "price_source": "Yahoo Finance daily close"
+   },
+   "kpis": {
+    "ticker": "AAPL",
+    "period": "FY2026",
+    "source_type": "10-K",
+    "revenue": 478834.0,
+    "revenue_growth_yoy": 0.1505979656911629,
+    "gross_profit": 233602.0,
+    "gross_margin": 0.48785591666423017,
+    "operating_income": 158063.0,
+    "operating_margin": 0.3300997840587761,
+    "net_income": 132175.0,
+    "net_margin": 0.27603511864236874,
+    "ebitda": 171486.0,
+    "eps_diluted": 8.98,
+    "eps_growth_yoy": null,
+    "free_cash_flow": 136056.0,
+    "total_debt": 80111.0,
+    "cash_and_equivalents": 36305.0,
+    "capex": 9041.0,
+    "r_and_d_expense": 45765.0,
+    "depreciation": 8700.0,
+    "amortization_of_intangibles": 4900.0,
+    "shares_outstanding": 14720.306,
+    "guidance_revenue_low": null,
+    "guidance_revenue_high": null,
+    "guidance_period": null,
+    "key_risks": [],
+    "growth_drivers": [],
+    "extraction_method": "xbrl",
+    "provenance": {
+     "source": "bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04)",
+     "form": "10-K",
+     "fiscal_year": "FY2026",
+     "fiscal_year_end": "2026-09-26",
+     "accession": "0000320193-26-000026",
+     "filed": "2026-11-03",
+     "figure_filings": {
+      "AmortizationOfIntangibleAssets": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "CashAndCashEquivalentsAtCarryingValue": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "CommercialPaper": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "Depreciation": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "DepreciationDepletionAndAmortization": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "EarningsPerShareDiluted": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "GrossProfit": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "LongTermDebt": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "NetIncomeLoss": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "OperatingIncomeLoss": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "PaymentsToAcquirePropertyPlantAndEquipment": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "ResearchAndDevelopmentExpense": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "RevenueFromContractWithCustomerExcludingAssessedTax": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      }
+     },
+     "per_share_basis": "as reported in the 10-K filed 2026-11-03 (0000320193-26-000026); not adjusted for any stock split after that filing",
+     "per_share_filed": "2026-11-03",
+     "period_end_shares_above_diluted": null,
+     "concepts": {
+      "amortization_of_intangibles": "AmortizationOfIntangibleAssets",
+      "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+      "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue",
+      "depreciation": "Depreciation",
+      "ebitda": "OperatingIncomeLoss + DepreciationDepletionAndAmortization (derived)",
+      "eps_diluted": "EarningsPerShareDiluted",
+      "free_cash_flow": "NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquirePropertyPlantAndEquipment (derived)",
+      "gross_profit": "GrossProfit",
+      "net_income": "NetIncomeLoss",
+      "operating_income": "OperatingIncomeLoss",
+      "r_and_d_expense": "ResearchAndDevelopmentExpense",
+      "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "revenue_growth_yoy": "RevenueFromContractWithCustomerExcludingAssessedTax vs fiscal year ended 2025-09-27 (derived)",
+      "shares_outstanding": "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "total_debt": "LongTermDebt + CommercialPaper (derived)"
+     },
+     "limitations": {
+      "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt."
+     },
+     "not_in_snapshot": [],
+     "missing": []
+    },
+    "mode": "demo"
+   },
+   "dcf": {
+    "ticker": "AAPL",
+    "mode": "demo",
+    "fiscal_year": "FY2026",
+    "valuation_date": "2026-09-26",
+    "valuation_date_basis": "fiscal year-end of the base 10-K: projected cash flows are discounted to this date and net debt is as of it. The value is not rolled forward, so a price quoted on a later date is compared across two dates.",
+    "intrinsic_value_per_share": 165.31008577873416,
+    "enterprise_value_m": 2477221.047549215,
+    "equity_value_m": 2433415.047549215,
+    "terminal_value_pct": 0.7330194019717766,
+    "pv_fcfs_m": 661369.9567227917,
+    "pv_terminal_value_m": 1815851.0908264236,
+    "projected_revenues_m": [
+     550945.4263037622,
+     617305.9623071883,
+     673048.0628080402,
+     713531.5614890383,
+     734937.5083337094
+    ],
+    "projected_fcfs_m": [
+     147274.59509790683,
+     165469.27696016335,
+     180925.22377745342,
+     192372.98682385168,
+     198748.78040784516
+    ],
+    "assumptions": {
+     "wacc": 0.1,
+     "terminal_growth_rate": 0.03,
+     "n_years": 5,
+     "revenue_growth_rates": [
+      0.1505979656911629,
+      0.12044847426837219,
+      0.09029898284558145,
+      0.06014949142279072,
+      0.03
+     ],
+     "ebitda_margin": 0.3581324634424456,
+     "da_as_pct_revenue": 0.028032679383669497,
+     "capex_as_pct_revenue": 0.01888128244861476,
+     "terminal_capex_as_pct_revenue": 0.01779948792274567,
+     "capex_pct_schedule": [
+      0.01888128244861476,
+      0.01861083381714749,
+      0.018340385185680215,
+      0.01806993655421294,
+      0.01779948792274567
+     ],
+     "nwc_pct_of_revenue_change": 0.02,
+     "tax_rate": 0.21,
+     "base_revenue_m": 478834.0,
+     "net_debt_m": 43806.0,
+     "shares_outstanding_m": 14720.306
+    },
+    "total_debt_concepts": [
+     "LongTermDebt",
+     "CommercialPaper"
+    ],
+    "assumption_sources": {
+     "base_revenue": "reported revenue, FY2026",
+     "shares_outstanding": "reported diluted weighted-average shares over FY2026 (WeightedAverageNumberOfDilutedSharesOutstanding), not the period-end count — as reported in the 10-K filed 2026-11-03 (0000320193-26-000026); not adjusted for any stock split after that filing",
+     "terminal_growth_rate": "default: 3.0%",
+     "wacc": "default: 10.0%",
+     "revenue_growth_rates": "trailing revenue growth, FY2026; linear to terminal growth by year 5",
+     "da_as_pct_revenue": "reported (EBITDA − operating income) / revenue, FY2026 — D&A from DepreciationDepletionAndAmortization",
+     "ebitda_margin": "reported EBITDA / revenue, FY2026",
+     "capex_as_pct_revenue": "reported CapEx / revenue, FY2026 (1.9%) in year 1, linear to D&A less amortization of acquired intangibles (AmortizationOfIntangibleAssets) (1.8%) by year 5",
+     "net_debt": "reported total debt (LongTermDebt + CommercialPaper (derived)) − cash and cash equivalents (CashAndCashEquivalentsAtCarryingValue), FY2026; marketable securities (current and non-current) are not netted, and noncontrolling interests and preferred stock are not deducted from equity value",
+     "nwc_pct_of_revenue_change": "default: 2% of the revenue change",
+     "tax_rate": "default: 21%"
+    },
+    "defaulted_inputs": [
+     "nwc_pct_of_revenue_change",
+     "tax_rate",
+     "terminal_growth_rate",
+     "wacc"
+    ],
+    "assumed_fundamentals": [],
+    "adjustments": {
+     "revenue_growth_rates": "year 1 at trailing revenue growth, FY2026 (15.1%), moving linearly to the 3.0% terminal rate by year 5",
+     "capex_as_pct_revenue": "reported 1.9% of revenue in year 1, moving linearly to 1.8% (D&A less acquired-intangible amortization) by year 5 and held there in the terminal year"
+    },
+    "limitations": {
+     "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt.",
+     "steady_state_capex": "Steady-state CapEx is D&A less amortization of acquired intangibles: 1.8% of revenue, not the 2.8% D&A rate. The 1.0% of amortization is added back as non-cash and is not treated as reinvestment; future acquisitions (and the amortization running off) are outside the model.",
+     "marketable_securities": "Net debt nets cash and cash equivalents only. Marketable securities (current and non-current) are not netted, so for a filer that holds them net debt is overstated and the per-share value understated: each $1B not netted is $0.07 a share. Noncontrolling interests and preferred stock are not deducted either, which overstates equity value for a filer that has them.",
+     "free_cash_flow_basis": "The projected free cash flow is not the reported one. Projected: EBIT × (1 − tax) + D&A − CapEx − ΔNWC. It starts from operating income, so stock-based compensation stays a cost and is never added back; it charges a flat 21% tax on EBIT and working capital at 2% of the revenue change; interest and other non-operating income are outside it. Reported (/kpis free_cash_flow): operating cash flow − CapEx, $136,056M for FY2026, which adds stock-based compensation back as non-cash and holds the taxes actually paid, interest and the actual working-capital movement. The projected formula on FY2026's own figures, before growth and ΔNWC, gives $129,252M. FinSight does not read a stock-compensation concept, so nothing here splits the difference between the two."
+    },
+    "provenance": {
+     "source": "bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04)",
+     "form": "10-K",
+     "fiscal_year": "FY2026",
+     "fiscal_year_end": "2026-09-26",
+     "accession": "0000320193-26-000026",
+     "filed": "2026-11-03",
+     "figure_filings": {
+      "AmortizationOfIntangibleAssets": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "CashAndCashEquivalentsAtCarryingValue": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "CommercialPaper": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "Depreciation": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "DepreciationDepletionAndAmortization": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "EarningsPerShareDiluted": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "GrossProfit": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "LongTermDebt": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "NetIncomeLoss": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "OperatingIncomeLoss": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "PaymentsToAcquirePropertyPlantAndEquipment": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "ResearchAndDevelopmentExpense": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "RevenueFromContractWithCustomerExcludingAssessedTax": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+       "accession": "0000320193-26-000026",
+       "filed": "2026-11-03"
+      }
+     },
+     "per_share_basis": "as reported in the 10-K filed 2026-11-03 (0000320193-26-000026); not adjusted for any stock split after that filing",
+     "per_share_filed": "2026-11-03",
+     "period_end_shares_above_diluted": null,
+     "concepts": {
+      "amortization_of_intangibles": "AmortizationOfIntangibleAssets",
+      "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+      "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue",
+      "depreciation": "Depreciation",
+      "ebitda": "OperatingIncomeLoss + DepreciationDepletionAndAmortization (derived)",
+      "eps_diluted": "EarningsPerShareDiluted",
+      "free_cash_flow": "NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquirePropertyPlantAndEquipment (derived)",
+      "gross_profit": "GrossProfit",
+      "net_income": "NetIncomeLoss",
+      "operating_income": "OperatingIncomeLoss",
+      "r_and_d_expense": "ResearchAndDevelopmentExpense",
+      "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "revenue_growth_yoy": "RevenueFromContractWithCustomerExcludingAssessedTax vs fiscal year ended 2025-09-27 (derived)",
+      "shares_outstanding": "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "total_debt": "LongTermDebt + CommercialPaper (derived)"
+     },
+     "limitations": {
+      "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt."
+     },
+     "not_in_snapshot": [],
+     "missing": []
+    }
+   },
+   "sentiment": {
+    "ticker": "AAPL",
+    "mode": "demo",
+    "available": true,
+    "synthetic": true,
+    "results": [
+     {
+      "quarter": "Q4 (synthetic)",
+      "overall_tone": "Neutral",
+      "net_sentiment": 0.0,
+      "guidance_tone": "not_stated",
+      "risk_mentions": 1,
+      "sentiment_drift": 0.0,
+      "synthetic": true,
+      "source": "synthetic placeholder transcript — boilerplate text identical for every company, not an earnings call"
+     }
+    ],
+    "detail": "No real earnings-call transcript was analysed: the sentiment below is computed from a synthetic placeholder transcript and is illustrative only."
+   }
+  },
+  "MSFT": {
+   "meta": {
+    "ticker": "MSFT",
+    "mode": "demo",
+    "company_name": "Microsoft Corporation",
+    "sector": "Technology",
+    "current_price": 521.91,
+    "price_date": "2026-10-30",
+    "price_source": "Yahoo Finance daily close"
+   },
+   "kpis": {
+    "ticker": "MSFT",
+    "period": "FY2026",
+    "source_type": "10-K",
+    "revenue": 331839.0,
+    "revenue_growth_yoy": 0.17788686799846665,
+    "gross_profit": 225465.0,
+    "gross_margin": 0.6794409337058032,
+    "operating_income": 155237.0,
+    "operating_margin": 0.4678081840892722,
+    "net_income": 133749.0,
+    "net_margin": 0.4030538905915218,
+    "ebitda": 194237.0,
+    "eps_diluted": 17.95,
+    "eps_growth_yoy": null,
+    "free_cash_flow": 66987.0,
+    "total_debt": 40294.0,
+    "cash_and_equivalents": 20935.0,
+    "capex": 115948.0,
+    "r_and_d_expense": 35562.0,
+    "depreciation": 34300.0,
+    "amortization_of_intangibles": 4700.0,
+    "shares_outstanding": 7453.0,
+    "guidance_revenue_low": null,
+    "guidance_revenue_high": null,
+    "guidance_period": null,
+    "key_risks": [],
+    "growth_drivers": [],
+    "extraction_method": "xbrl",
+    "provenance": {
+     "source": "bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04)",
+     "form": "10-K",
+     "fiscal_year": "FY2026",
+     "fiscal_year_end": "2026-06-30",
+     "accession": "0001193125-26-323660",
+     "filed": "2026-07-29",
+     "figure_filings": {
+      "AmortizationOfIntangibleAssets": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "CashAndCashEquivalentsAtCarryingValue": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "Depreciation": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "EarningsPerShareDiluted": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "GrossProfit": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "LongTermDebt": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "NetIncomeLoss": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "OperatingIncomeLoss": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "PaymentsToAcquirePropertyPlantAndEquipment": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "ResearchAndDevelopmentExpense": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "RevenueFromContractWithCustomerExcludingAssessedTax": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      }
+     },
+     "per_share_basis": "as reported in the 10-K filed 2026-07-29 (0001193125-26-323660); not adjusted for any stock split after that filing",
+     "per_share_filed": "2026-07-29",
+     "period_end_shares_above_diluted": null,
+     "concepts": {
+      "amortization_of_intangibles": "AmortizationOfIntangibleAssets",
+      "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+      "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue",
+      "depreciation": "Depreciation",
+      "ebitda": "OperatingIncomeLoss + (Depreciation + AmortizationOfIntangibleAssets) (derived)",
+      "eps_diluted": "EarningsPerShareDiluted",
+      "free_cash_flow": "NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquirePropertyPlantAndEquipment (derived)",
+      "gross_profit": "GrossProfit",
+      "net_income": "NetIncomeLoss",
+      "operating_income": "OperatingIncomeLoss",
+      "r_and_d_expense": "ResearchAndDevelopmentExpense",
+      "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "revenue_growth_yoy": "RevenueFromContractWithCustomerExcludingAssessedTax vs fiscal year ended 2025-06-30 (derived)",
+      "shares_outstanding": "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "total_debt": "LongTermDebt"
+     },
+     "limitations": {
+      "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt."
+     },
+     "not_in_snapshot": [],
+     "missing": []
+    },
+    "mode": "demo"
+   },
+   "dcf": {
+    "ticker": "MSFT",
+    "mode": "demo",
+    "fiscal_year": "FY2026",
+    "valuation_date": "2026-06-30",
+    "valuation_date_basis": "fiscal year-end of the base 10-K: projected cash flows are discounted to this date and net debt is as of it. The value is not rolled forward, so a price quoted on a later date is compared across two dates.",
+    "intrinsic_value_per_share": 313.23364199008915,
+    "enterprise_value_m": 2353889.3337521343,
+    "equity_value_m": 2334530.3337521343,
+    "terminal_value_pct": 0.8045984931534942,
+    "pv_fcfs_m": 459953.5227650848,
+    "pv_terminal_value_m": 1893935.8109870497,
+    "projected_revenues_m": [
+     390868.8003897432,
+     445948.1364174032,
+     492301.5171021866,
+     525271.7949840362,
+     541029.9488335573
+    ],
+    "projected_fcfs_m": [
+     52636.14801816672,
+     87729.80541056501,
+     127420.09585536736,
+     168593.7789420177,
+     207295.31981232305
+    ],
+    "assumptions": {
+     "wacc": 0.1,
+     "terminal_growth_rate": 0.03,
+     "n_years": 5,
+     "revenue_growth_rates": [
+      0.17788686799846665,
+      0.14091515099885,
+      0.10394343399923332,
+      0.06697171699961665,
+      0.03
+     ],
+     "ebitda_margin": 0.5853350570608036,
+     "da_as_pct_revenue": 0.11752687297153137,
+     "capex_as_pct_revenue": 0.34941040685392616,
+     "terminal_capex_as_pct_revenue": 0.10336337802368016,
+     "capex_pct_schedule": [
+      0.34941040685392616,
+      0.2878986496463647,
+      0.22638689243880317,
+      0.16487513523124167,
+      0.10336337802368017
+     ],
+     "nwc_pct_of_revenue_change": 0.02,
+     "tax_rate": 0.21,
+     "base_revenue_m": 331839.0,
+     "net_debt_m": 19359.0,
+     "shares_outstanding_m": 7453.0
+    },
+    "total_debt_concepts": [
+     "LongTermDebt"
+    ],
+    "assumption_sources": {
+     "base_revenue": "reported revenue, FY2026",
+     "shares_outstanding": "reported diluted weighted-average shares over FY2026 (WeightedAverageNumberOfDilutedSharesOutstanding), not the period-end count — as reported in the 10-K filed 2026-07-29 (0001193125-26-323660); not adjusted for any stock split after that filing",
+     "terminal_growth_rate": "default: 3.0%",
+     "wacc": "default: 10.0%",
+     "revenue_growth_rates": "trailing revenue growth, FY2026; linear to terminal growth by year 5",
+     "da_as_pct_revenue": "reported (EBITDA − operating income) / revenue, FY2026 — D&A from (Depreciation + AmortizationOfIntangibleAssets)",
+     "ebitda_margin": "reported EBITDA / revenue, FY2026",
+     "capex_as_pct_revenue": "reported CapEx / revenue, FY2026 (34.9%) in year 1, linear to D&A less amortization of acquired intangibles (AmortizationOfIntangibleAssets) (10.3%) by year 5",
+     "net_debt": "reported total debt (LongTermDebt) − cash and cash equivalents (CashAndCashEquivalentsAtCarryingValue), FY2026; marketable securities (current and non-current) are not netted, and noncontrolling interests and preferred stock are not deducted from equity value",
+     "nwc_pct_of_revenue_change": "default: 2% of the revenue change",
+     "tax_rate": "default: 21%"
+    },
+    "defaulted_inputs": [
+     "nwc_pct_of_revenue_change",
+     "tax_rate",
+     "terminal_growth_rate",
+     "wacc"
+    ],
+    "assumed_fundamentals": [],
+    "adjustments": {
+     "revenue_growth_rates": "year 1 at trailing revenue growth, FY2026 (17.8%), moving linearly to the 3.0% terminal rate by year 5",
+     "capex_as_pct_revenue": "reported 34.9% of revenue in year 1, moving linearly to 10.3% (D&A less acquired-intangible amortization) by year 5 and held there in the terminal year"
+    },
+    "limitations": {
+     "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt.",
+     "steady_state_capex": "Steady-state CapEx is D&A less amortization of acquired intangibles: 10.3% of revenue, not the 11.8% D&A rate. The 1.4% of amortization is added back as non-cash and is not treated as reinvestment; future acquisitions (and the amortization running off) are outside the model.",
+     "marketable_securities": "Net debt nets cash and cash equivalents only. Marketable securities (current and non-current) are not netted, so for a filer that holds them net debt is overstated and the per-share value understated: each $1B not netted is $0.13 a share. Noncontrolling interests and preferred stock are not deducted either, which overstates equity value for a filer that has them.",
+     "free_cash_flow_basis": "The projected free cash flow is not the reported one. Projected: EBIT × (1 − tax) + D&A − CapEx − ΔNWC. It starts from operating income, so stock-based compensation stays a cost and is never added back; it charges a flat 21% tax on EBIT and working capital at 2% of the revenue change; interest and other non-operating income are outside it. Reported (/kpis free_cash_flow): operating cash flow − CapEx, $66,987M for FY2026, which adds stock-based compensation back as non-cash and holds the taxes actually paid, interest and the actual working-capital movement. The projected formula on FY2026's own figures, before growth and ΔNWC, gives $45,689M. FinSight does not read a stock-compensation concept, so nothing here splits the difference between the two."
+    },
+    "provenance": {
+     "source": "bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04)",
+     "form": "10-K",
+     "fiscal_year": "FY2026",
+     "fiscal_year_end": "2026-06-30",
+     "accession": "0001193125-26-323660",
+     "filed": "2026-07-29",
+     "figure_filings": {
+      "AmortizationOfIntangibleAssets": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "CashAndCashEquivalentsAtCarryingValue": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "Depreciation": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "EarningsPerShareDiluted": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "GrossProfit": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "LongTermDebt": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "NetIncomeLoss": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "OperatingIncomeLoss": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "PaymentsToAcquirePropertyPlantAndEquipment": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "ResearchAndDevelopmentExpense": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "RevenueFromContractWithCustomerExcludingAssessedTax": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+       "accession": "0001193125-26-323660",
+       "filed": "2026-07-29"
+      }
+     },
+     "per_share_basis": "as reported in the 10-K filed 2026-07-29 (0001193125-26-323660); not adjusted for any stock split after that filing",
+     "per_share_filed": "2026-07-29",
+     "period_end_shares_above_diluted": null,
+     "concepts": {
+      "amortization_of_intangibles": "AmortizationOfIntangibleAssets",
+      "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+      "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue",
+      "depreciation": "Depreciation",
+      "ebitda": "OperatingIncomeLoss + (Depreciation + AmortizationOfIntangibleAssets) (derived)",
+      "eps_diluted": "EarningsPerShareDiluted",
+      "free_cash_flow": "NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquirePropertyPlantAndEquipment (derived)",
+      "gross_profit": "GrossProfit",
+      "net_income": "NetIncomeLoss",
+      "operating_income": "OperatingIncomeLoss",
+      "r_and_d_expense": "ResearchAndDevelopmentExpense",
+      "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "revenue_growth_yoy": "RevenueFromContractWithCustomerExcludingAssessedTax vs fiscal year ended 2025-06-30 (derived)",
+      "shares_outstanding": "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "total_debt": "LongTermDebt"
+     },
+     "limitations": {
+      "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt."
+     },
+     "not_in_snapshot": [],
+     "missing": []
+    }
+   },
+   "sentiment": {
+    "ticker": "MSFT",
+    "mode": "demo",
+    "available": true,
+    "synthetic": true,
+    "results": [
+     {
+      "quarter": "Q4 (synthetic)",
+      "overall_tone": "Neutral",
+      "net_sentiment": 0.0,
+      "guidance_tone": "not_stated",
+      "risk_mentions": 1,
+      "sentiment_drift": 0.0,
+      "synthetic": true,
+      "source": "synthetic placeholder transcript — boilerplate text identical for every company, not an earnings call"
+     }
+    ],
+    "detail": "No real earnings-call transcript was analysed: the sentiment below is computed from a synthetic placeholder transcript and is illustrative only."
+   }
+  },
+  "NVDA": {
+   "meta": {
+    "ticker": "NVDA",
+    "mode": "demo",
+    "company_name": "NVIDIA Corporation",
+    "sector": "Technology",
+    "current_price": 204.64,
+    "price_date": "2026-10-30",
+    "price_source": "Yahoo Finance daily close"
+   },
+   "kpis": {
+    "ticker": "NVDA",
+    "period": "FY2026",
+    "source_type": "10-K",
+    "revenue": 215938.0,
+    "revenue_growth_yoy": 0.6547353579009478,
+    "gross_profit": 153463.0,
+    "gross_margin": 0.7106808435754708,
+    "operating_income": 130387.0,
+    "operating_margin": 0.6038168363141272,
+    "net_income": 120067.0,
+    "net_margin": 0.5560253406070261,
+    "ebitda": 133230.0,
+    "eps_diluted": 4.9,
+    "eps_growth_yoy": null,
+    "free_cash_flow": 96676.0,
+    "total_debt": 8468.0,
+    "cash_and_equivalents": 10605.0,
+    "capex": 6042.0,
+    "r_and_d_expense": 18497.0,
+    "depreciation": 2400.0,
+    "amortization_of_intangibles": 488.0,
+    "shares_outstanding": 24514.0,
+    "guidance_revenue_low": null,
+    "guidance_revenue_high": null,
+    "guidance_period": null,
+    "key_risks": [],
+    "growth_drivers": [],
+    "extraction_method": "xbrl",
+    "provenance": {
+     "source": "bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04)",
+     "form": "10-K",
+     "fiscal_year": "FY2026",
+     "fiscal_year_end": "2026-01-25",
+     "accession": "0001045810-26-000021",
+     "filed": "2026-02-25",
+     "figure_filings": {
+      "AmortizationOfIntangibleAssets": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "CashAndCashEquivalentsAtCarryingValue": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "Depreciation": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "DepreciationDepletionAndAmortization": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "EarningsPerShareDiluted": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "GrossProfit": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "LongTermDebt": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "NetIncomeLoss": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "OperatingIncomeLoss": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "PaymentsToAcquireProductiveAssets": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "ResearchAndDevelopmentExpense": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "Revenues": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      }
+     },
+     "per_share_basis": "as reported in the 10-K filed 2026-02-25 (0001045810-26-000021); not adjusted for any stock split after that filing",
+     "per_share_filed": "2026-02-25",
+     "period_end_shares_above_diluted": null,
+     "concepts": {
+      "amortization_of_intangibles": "AmortizationOfIntangibleAssets",
+      "capex": "PaymentsToAcquireProductiveAssets",
+      "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue",
+      "depreciation": "Depreciation",
+      "ebitda": "OperatingIncomeLoss + DepreciationDepletionAndAmortization (derived)",
+      "eps_diluted": "EarningsPerShareDiluted",
+      "free_cash_flow": "NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquireProductiveAssets (derived)",
+      "gross_profit": "GrossProfit",
+      "net_income": "NetIncomeLoss",
+      "operating_income": "OperatingIncomeLoss",
+      "r_and_d_expense": "ResearchAndDevelopmentExpense",
+      "revenue": "Revenues",
+      "revenue_growth_yoy": "Revenues vs fiscal year ended 2025-01-26 (derived)",
+      "shares_outstanding": "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "total_debt": "LongTermDebt"
+     },
+     "limitations": {
+      "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquireProductiveAssets); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt."
+     },
+     "not_in_snapshot": [],
+     "missing": []
+    },
+    "mode": "demo"
+   },
+   "dcf": {
+    "ticker": "NVDA",
+    "mode": "demo",
+    "fiscal_year": "FY2026",
+    "valuation_date": "2026-01-25",
+    "valuation_date_basis": "fiscal year-end of the base 10-K: projected cash flows are discounted to this date and net debt is as of it. The value is not rolled forward, so a price quoted on a later date is compared across two dates.",
+    "intrinsic_value_per_share": 127.44053405219829,
+    "enterprise_value_m": 3121940.2517555887,
+    "equity_value_m": 3124077.2517555887,
+    "terminal_value_pct": 0.756067980609581,
+    "pv_fcfs_m": 761541.1900269737,
+    "pv_terminal_value_m": 2360399.061728615,
+    "projected_revenues_m": [
+     302313.19999999995,
+     395274.50899999996,
+     480258.528435,
+     539090.1981682875,
+     555262.9041133361
+    ],
+    "projected_fcfs_m": [
+     133945.9948,
+     177221.13687599998,
+     217932.985724965,
+     247662.18738112474,
+     258350.7189352609
+    ],
+    "assumptions": {
+     "wacc": 0.1,
+     "terminal_growth_rate": 0.03,
+     "n_years": 5,
+     "revenue_growth_rates": [
+      0.4,
+      0.3075,
+      0.21500000000000002,
+      0.12250000000000005,
+      0.030000000000000027
+     ],
+     "ebitda_margin": 0.6,
+     "da_as_pct_revenue": 0.013165816113884541,
+     "capex_as_pct_revenue": 0.027980253591308617,
+     "terminal_capex_as_pct_revenue": 0.010905908177347202,
+     "capex_pct_schedule": [
+      0.027980253591308617,
+      0.023711667237818264,
+      0.01944308088432791,
+      0.015174494530837555,
+      0.010905908177347202
+     ],
+     "nwc_pct_of_revenue_change": 0.02,
+     "tax_rate": 0.21,
+     "base_revenue_m": 215938.0,
+     "net_debt_m": -2137.0,
+     "shares_outstanding_m": 24514.0
+    },
+    "total_debt_concepts": [
+     "LongTermDebt"
+    ],
+    "assumption_sources": {
+     "base_revenue": "reported revenue, FY2026",
+     "shares_outstanding": "reported diluted weighted-average shares over FY2026 (WeightedAverageNumberOfDilutedSharesOutstanding), not the period-end count — as reported in the 10-K filed 2026-02-25 (0001045810-26-000021); not adjusted for any stock split after that filing",
+     "terminal_growth_rate": "default: 3.0%",
+     "wacc": "default: 10.0%",
+     "revenue_growth_rates": "trailing revenue growth, FY2026 (65.5%, clamped to 40.0%); linear to terminal growth by year 5",
+     "da_as_pct_revenue": "reported (EBITDA − operating income) / revenue, FY2026 — D&A from DepreciationDepletionAndAmortization",
+     "ebitda_margin": "reported EBITDA / revenue, FY2026 (61.7%, clamped to 60.0%)",
+     "capex_as_pct_revenue": "reported CapEx / revenue, FY2026 (2.8%) in year 1, linear to D&A less amortization of acquired intangibles (AmortizationOfIntangibleAssets) (1.1%) by year 5",
+     "net_debt": "reported total debt (LongTermDebt) − cash and cash equivalents (CashAndCashEquivalentsAtCarryingValue), FY2026; marketable securities (current and non-current) are not netted, and noncontrolling interests and preferred stock are not deducted from equity value",
+     "nwc_pct_of_revenue_change": "default: 2% of the revenue change",
+     "tax_rate": "default: 21%"
+    },
+    "defaulted_inputs": [
+     "nwc_pct_of_revenue_change",
+     "tax_rate",
+     "terminal_growth_rate",
+     "wacc"
+    ],
+    "assumed_fundamentals": [],
+    "adjustments": {
+     "revenue_growth_rates": "year 1 at trailing revenue growth, FY2026 (65.5%, clamped to 40.0%), moving linearly to the 3.0% terminal rate by year 5",
+     "ebitda_margin": "reported 61.7% clamped to 60.0% (the model caps the margin at 60%; below 5% it refuses)",
+     "capex_as_pct_revenue": "reported 2.8% of revenue in year 1, moving linearly to 1.1% (D&A less acquired-intangible amortization) by year 5 and held there in the terminal year"
+    },
+    "limitations": {
+     "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquireProductiveAssets); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt.",
+     "steady_state_capex": "Steady-state CapEx is D&A less amortization of acquired intangibles: 1.1% of revenue, not the 1.3% D&A rate. The 0.2% of amortization is added back as non-cash and is not treated as reinvestment; future acquisitions (and the amortization running off) are outside the model.",
+     "marketable_securities": "Net debt nets cash and cash equivalents only. Marketable securities (current and non-current) are not netted, so for a filer that holds them net debt is overstated and the per-share value understated: each $1B not netted is $0.04 a share. Noncontrolling interests and preferred stock are not deducted either, which overstates equity value for a filer that has them.",
+     "free_cash_flow_basis": "The projected free cash flow is not the reported one. Projected: EBIT × (1 − tax) + D&A − CapEx − ΔNWC. It starts from operating income, so stock-based compensation stays a cost and is never added back; it charges a flat 21% tax on EBIT and working capital at 2% of the revenue change; interest and other non-operating income are outside it. Reported (/kpis free_cash_flow): operating cash flow − CapEx, $96,676M for FY2026, which adds stock-based compensation back as non-cash and holds the taxes actually paid, interest and the actual working-capital movement. The projected formula on FY2026's own figures, before growth and ΔNWC, gives $96,910M. FinSight does not read a stock-compensation concept, so nothing here splits the difference between the two."
+    },
+    "provenance": {
+     "source": "bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04)",
+     "form": "10-K",
+     "fiscal_year": "FY2026",
+     "fiscal_year_end": "2026-01-25",
+     "accession": "0001045810-26-000021",
+     "filed": "2026-02-25",
+     "figure_filings": {
+      "AmortizationOfIntangibleAssets": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "CashAndCashEquivalentsAtCarryingValue": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "Depreciation": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "DepreciationDepletionAndAmortization": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "EarningsPerShareDiluted": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "GrossProfit": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "LongTermDebt": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "NetIncomeLoss": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "OperatingIncomeLoss": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "PaymentsToAcquireProductiveAssets": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "ResearchAndDevelopmentExpense": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "Revenues": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+       "accession": "0001045810-26-000021",
+       "filed": "2026-02-25"
+      }
+     },
+     "per_share_basis": "as reported in the 10-K filed 2026-02-25 (0001045810-26-000021); not adjusted for any stock split after that filing",
+     "per_share_filed": "2026-02-25",
+     "period_end_shares_above_diluted": null,
+     "concepts": {
+      "amortization_of_intangibles": "AmortizationOfIntangibleAssets",
+      "capex": "PaymentsToAcquireProductiveAssets",
+      "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue",
+      "depreciation": "Depreciation",
+      "ebitda": "OperatingIncomeLoss + DepreciationDepletionAndAmortization (derived)",
+      "eps_diluted": "EarningsPerShareDiluted",
+      "free_cash_flow": "NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquireProductiveAssets (derived)",
+      "gross_profit": "GrossProfit",
+      "net_income": "NetIncomeLoss",
+      "operating_income": "OperatingIncomeLoss",
+      "r_and_d_expense": "ResearchAndDevelopmentExpense",
+      "revenue": "Revenues",
+      "revenue_growth_yoy": "Revenues vs fiscal year ended 2025-01-26 (derived)",
+      "shares_outstanding": "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "total_debt": "LongTermDebt"
+     },
+     "limitations": {
+      "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquireProductiveAssets); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt."
+     },
+     "not_in_snapshot": [],
+     "missing": []
+    }
+   },
+   "sentiment": {
+    "ticker": "NVDA",
+    "mode": "demo",
+    "available": true,
+    "synthetic": true,
+    "results": [
+     {
+      "quarter": "Q4 (synthetic)",
+      "overall_tone": "Neutral",
+      "net_sentiment": 0.0,
+      "guidance_tone": "not_stated",
+      "risk_mentions": 1,
+      "sentiment_drift": 0.0,
+      "synthetic": true,
+      "source": "synthetic placeholder transcript — boilerplate text identical for every company, not an earnings call"
+     }
+    ],
+    "detail": "No real earnings-call transcript was analysed: the sentiment below is computed from a synthetic placeholder transcript and is illustrative only."
+   }
+  },
+  "GOOGL": {
+   "meta": {
+    "ticker": "GOOGL",
+    "mode": "demo",
+    "company_name": "Alphabet Inc.",
+    "sector": "Communication Services",
+    "current_price": 279.84,
+    "price_date": "2026-10-30",
+    "price_source": "Yahoo Finance daily close"
+   },
+   "kpis": {
+    "ticker": "GOOGL",
+    "period": "FY2025",
+    "source_type": "10-K",
+    "revenue": 402836.0,
+    "revenue_growth_yoy": 0.1509008108154437,
+    "gross_profit": 240301.0,
+    "gross_margin": 0.5965231508603998,
+    "operating_income": 129039.0,
+    "operating_margin": 0.32032638592380025,
+    "net_income": 132170.0,
+    "net_margin": 0.3280987796522654,
+    "ebitda": 150175.0,
+    "eps_diluted": 10.81,
+    "eps_growth_yoy": null,
+    "free_cash_flow": 73266.0,
+    "total_debt": 49085.0,
+    "cash_and_equivalents": 30708.0,
+    "capex": 91447.0,
+    "r_and_d_expense": 61087.0,
+    "depreciation": 21136.0,
+    "amortization_of_intangibles": null,
+    "shares_outstanding": 12230.0,
+    "guidance_revenue_low": null,
+    "guidance_revenue_high": null,
+    "guidance_period": null,
+    "key_risks": [],
+    "growth_drivers": [],
+    "extraction_method": "xbrl",
+    "provenance": {
+     "source": "bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04)",
+     "form": "10-K",
+     "fiscal_year": "FY2025",
+     "fiscal_year_end": "2025-12-31",
+     "accession": "0001652044-26-000018",
+     "filed": "2026-02-05",
+     "figure_filings": {
+      "CashAndCashEquivalentsAtCarryingValue": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "CommercialPaper": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "CostOfRevenue": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "Depreciation": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "EarningsPerShareDiluted": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "LongTermDebt": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "NetIncomeLoss": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "OperatingIncomeLoss": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "PaymentsToAcquirePropertyPlantAndEquipment": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "ResearchAndDevelopmentExpense": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "Revenues": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      }
+     },
+     "per_share_basis": "as reported in the 10-K filed 2026-02-05 (0001652044-26-000018); not adjusted for any stock split after that filing",
+     "per_share_filed": "2026-02-05",
+     "period_end_shares_above_diluted": null,
+     "concepts": {
+      "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+      "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue",
+      "depreciation": "Depreciation",
+      "ebitda": "OperatingIncomeLoss + Depreciation (derived)",
+      "eps_diluted": "EarningsPerShareDiluted",
+      "free_cash_flow": "NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquirePropertyPlantAndEquipment (derived)",
+      "gross_profit": "Revenues − CostOfRevenue (derived)",
+      "net_income": "NetIncomeLoss",
+      "operating_income": "OperatingIncomeLoss",
+      "r_and_d_expense": "ResearchAndDevelopmentExpense",
+      "revenue": "Revenues",
+      "revenue_growth_yoy": "Revenues vs fiscal year ended 2024-12-31 (derived)",
+      "shares_outstanding": "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "total_debt": "LongTermDebt + CommercialPaper (derived)"
+     },
+     "limitations": {
+      "depreciation_amortization": "D&A is us-gaap:Depreciation — depreciation of property and equipment only. The filer's 10-K facts for this fiscal year report no total D&A concept (DepreciationDepletionAndAmortization, DepreciationAndAmortization, DepreciationAmortizationAndAccretionNet) nor AmortizationOfIntangibleAssets. D&A and EBITDA exclude any amortization and are understated.",
+      "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt."
+     },
+     "not_in_snapshot": [],
+     "missing": []
+    },
+    "mode": "demo"
+   },
+   "dcf": {
+    "ticker": "GOOGL",
+    "mode": "demo",
+    "fiscal_year": "FY2025",
+    "valuation_date": "2025-12-31",
+    "valuation_date_basis": "fiscal year-end of the base 10-K: projected cash flows are discounted to this date and net debt is as of it. The value is not rolled forward, so a price quoted on a later date is compared across two dates.",
+    "intrinsic_value_per_share": 142.65279436073104,
+    "enterprise_value_m": 1763020.6750317407,
+    "equity_value_m": 1744643.6750317407,
+    "terminal_value_pct": 0.8095145201564756,
+    "pv_fcfs_m": 335829.83925747534,
+    "pv_terminal_value_m": 1427190.8357742652,
+    "projected_revenues_m": [
+     463624.27902565006,
+     519572.42083236447,
+     566567.9569353233,
+     600689.6269872655,
+     618710.3157968835
+    ],
+    "projected_fcfs_m": [
+     35187.00839442541,
+     62348.28207855513,
+     92990.1666294988,
+     125115.69547250844,
+     156209.08534426882
+    ],
+    "assumptions": {
+     "wacc": 0.1,
+     "terminal_growth_rate": 0.03,
+     "n_years": 5,
+     "revenue_growth_rates": [
+      0.1509008108154437,
+      0.12067560811158279,
+      0.09045040540772185,
+      0.06022520270386092,
+      0.03
+     ],
+     "ebitda_margin": 0.3727943877905649,
+     "da_as_pct_revenue": 0.05246800186676464,
+     "capex_as_pct_revenue": 0.22700801318650765,
+     "terminal_capex_as_pct_revenue": 0.05246800186676464,
+     "capex_pct_schedule": [
+      0.22700801318650765,
+      0.18337301035657189,
+      0.13973800752663615,
+      0.09610300469670041,
+      0.052468001866764646
+     ],
+     "nwc_pct_of_revenue_change": 0.02,
+     "tax_rate": 0.21,
+     "base_revenue_m": 402836.0,
+     "net_debt_m": 18377.0,
+     "shares_outstanding_m": 12230.0
+    },
+    "total_debt_concepts": [
+     "LongTermDebt",
+     "CommercialPaper"
+    ],
+    "assumption_sources": {
+     "base_revenue": "reported revenue, FY2025",
+     "shares_outstanding": "reported diluted weighted-average shares over FY2025 (WeightedAverageNumberOfDilutedSharesOutstanding), not the period-end count — as reported in the 10-K filed 2026-02-05 (0001652044-26-000018); not adjusted for any stock split after that filing",
+     "terminal_growth_rate": "default: 3.0%",
+     "wacc": "default: 10.0%",
+     "revenue_growth_rates": "trailing revenue growth, FY2025; linear to terminal growth by year 5",
+     "da_as_pct_revenue": "reported (EBITDA − operating income) / revenue, FY2025 — D&A from Depreciation",
+     "ebitda_margin": "reported EBITDA / revenue, FY2025",
+     "capex_as_pct_revenue": "reported CapEx / revenue, FY2025 (22.7%) in year 1, linear to the D&A rate (5.2%) by year 5",
+     "net_debt": "reported total debt (LongTermDebt + CommercialPaper (derived)) − cash and cash equivalents (CashAndCashEquivalentsAtCarryingValue), FY2025; marketable securities (current and non-current) are not netted, and noncontrolling interests and preferred stock are not deducted from equity value",
+     "nwc_pct_of_revenue_change": "default: 2% of the revenue change",
+     "tax_rate": "default: 21%"
+    },
+    "defaulted_inputs": [
+     "nwc_pct_of_revenue_change",
+     "tax_rate",
+     "terminal_growth_rate",
+     "wacc"
+    ],
+    "assumed_fundamentals": [],
+    "adjustments": {
+     "revenue_growth_rates": "year 1 at trailing revenue growth, FY2025 (15.1%), moving linearly to the 3.0% terminal rate by year 5",
+     "capex_as_pct_revenue": "reported 22.7% of revenue in year 1, moving linearly to the 5.2% D&A rate by year 5 and held there in the terminal year (steady state: CapEx = D&A)"
+    },
+    "limitations": {
+     "depreciation_amortization": "D&A is us-gaap:Depreciation — depreciation of property and equipment only. The filer's 10-K facts for this fiscal year report no total D&A concept (DepreciationDepletionAndAmortization, DepreciationAndAmortization, DepreciationAmortizationAndAccretionNet) nor AmortizationOfIntangibleAssets. D&A and EBITDA exclude any amortization and are understated.",
+     "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt.",
+     "marketable_securities": "Net debt nets cash and cash equivalents only. Marketable securities (current and non-current) are not netted, so for a filer that holds them net debt is overstated and the per-share value understated: each $1B not netted is $0.08 a share. Noncontrolling interests and preferred stock are not deducted either, which overstates equity value for a filer that has them.",
+     "free_cash_flow_basis": "The projected free cash flow is not the reported one. Projected: EBIT × (1 − tax) + D&A − CapEx − ΔNWC. It starts from operating income, so stock-based compensation stays a cost and is never added back; it charges a flat 21% tax on EBIT and working capital at 2% of the revenue change; interest and other non-operating income are outside it. Reported (/kpis free_cash_flow): operating cash flow − CapEx, $73,266M for FY2025, which adds stock-based compensation back as non-cash and holds the taxes actually paid, interest and the actual working-capital movement. The projected formula on FY2025's own figures, before growth and ΔNWC, gives $31,630M. FinSight does not read a stock-compensation concept, so nothing here splits the difference between the two."
+    },
+    "provenance": {
+     "source": "bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04)",
+     "form": "10-K",
+     "fiscal_year": "FY2025",
+     "fiscal_year_end": "2025-12-31",
+     "accession": "0001652044-26-000018",
+     "filed": "2026-02-05",
+     "figure_filings": {
+      "CashAndCashEquivalentsAtCarryingValue": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "CommercialPaper": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "CostOfRevenue": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "Depreciation": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "EarningsPerShareDiluted": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "LongTermDebt": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "NetIncomeLoss": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "OperatingIncomeLoss": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "PaymentsToAcquirePropertyPlantAndEquipment": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "ResearchAndDevelopmentExpense": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "Revenues": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+       "accession": "0001652044-26-000018",
+       "filed": "2026-02-05"
+      }
+     },
+     "per_share_basis": "as reported in the 10-K filed 2026-02-05 (0001652044-26-000018); not adjusted for any stock split after that filing",
+     "per_share_filed": "2026-02-05",
+     "period_end_shares_above_diluted": null,
+     "concepts": {
+      "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+      "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue",
+      "depreciation": "Depreciation",
+      "ebitda": "OperatingIncomeLoss + Depreciation (derived)",
+      "eps_diluted": "EarningsPerShareDiluted",
+      "free_cash_flow": "NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquirePropertyPlantAndEquipment (derived)",
+      "gross_profit": "Revenues − CostOfRevenue (derived)",
+      "net_income": "NetIncomeLoss",
+      "operating_income": "OperatingIncomeLoss",
+      "r_and_d_expense": "ResearchAndDevelopmentExpense",
+      "revenue": "Revenues",
+      "revenue_growth_yoy": "Revenues vs fiscal year ended 2024-12-31 (derived)",
+      "shares_outstanding": "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "total_debt": "LongTermDebt + CommercialPaper (derived)"
+     },
+     "limitations": {
+      "depreciation_amortization": "D&A is us-gaap:Depreciation — depreciation of property and equipment only. The filer's 10-K facts for this fiscal year report no total D&A concept (DepreciationDepletionAndAmortization, DepreciationAndAmortization, DepreciationAmortizationAndAccretionNet) nor AmortizationOfIntangibleAssets. D&A and EBITDA exclude any amortization and are understated.",
+      "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt."
+     },
+     "not_in_snapshot": [],
+     "missing": []
+    }
+   },
+   "sentiment": {
+    "ticker": "GOOGL",
+    "mode": "demo",
+    "available": true,
+    "synthetic": true,
+    "results": [
+     {
+      "quarter": "Q4 (synthetic)",
+      "overall_tone": "Neutral",
+      "net_sentiment": 0.0,
+      "guidance_tone": "not_stated",
+      "risk_mentions": 1,
+      "sentiment_drift": 0.0,
+      "synthetic": true,
+      "source": "synthetic placeholder transcript — boilerplate text identical for every company, not an earnings call"
+     }
+    ],
+    "detail": "No real earnings-call transcript was analysed: the sentiment below is computed from a synthetic placeholder transcript and is illustrative only."
+   }
+  },
+  "TSLA": {
+   "meta": {
+    "ticker": "TSLA",
+    "mode": "demo",
+    "company_name": "Tesla, Inc.",
+    "sector": "Consumer Cyclical",
+    "current_price": 399.81,
+    "price_date": "2026-10-30",
+    "price_source": "Yahoo Finance daily close"
+   },
+   "kpis": {
+    "ticker": "TSLA",
+    "period": "FY2025",
+    "source_type": "10-K",
+    "revenue": 94827.0,
+    "revenue_growth_yoy": -0.02930699150373628,
+    "gross_profit": 17094.0,
+    "gross_margin": 0.18026511436616155,
+    "operating_income": 4355.0,
+    "operating_margin": 0.04592573845001951,
+    "net_income": 3794.0,
+    "net_margin": 0.04000970187815706,
+    "ebitda": 9385.0,
+    "eps_diluted": 1.08,
+    "eps_growth_yoy": null,
+    "free_cash_flow": 6220.0,
+    "total_debt": 6584.0,
+    "cash_and_equivalents": 16513.0,
+    "capex": 8527.0,
+    "r_and_d_expense": 6411.0,
+    "depreciation": 5030.0,
+    "amortization_of_intangibles": null,
+    "shares_outstanding": 3528.0,
+    "guidance_revenue_low": null,
+    "guidance_revenue_high": null,
+    "guidance_period": null,
+    "key_risks": [],
+    "growth_drivers": [],
+    "extraction_method": "xbrl",
+    "provenance": {
+     "source": "bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04)",
+     "form": "10-K",
+     "fiscal_year": "FY2025",
+     "fiscal_year_end": "2025-12-31",
+     "accession": "0001628280-26-003952",
+     "filed": "2026-01-29",
+     "figure_filings": {
+      "CashAndCashEquivalentsAtCarryingValue": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "Depreciation": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "EarningsPerShareDiluted": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "GrossProfit": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "LongTermDebt": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "NetIncomeLoss": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "OperatingIncomeLoss": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "PaymentsToAcquirePropertyPlantAndEquipment": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "ResearchAndDevelopmentExpense": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "Revenues": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      }
+     },
+     "per_share_basis": "as reported in the 10-K filed 2026-01-29 (0001628280-26-003952); not adjusted for any stock split after that filing",
+     "per_share_filed": "2026-01-29",
+     "period_end_shares_above_diluted": 3751.0,
+     "concepts": {
+      "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+      "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue",
+      "depreciation": "Depreciation",
+      "ebitda": "OperatingIncomeLoss + Depreciation (derived)",
+      "eps_diluted": "EarningsPerShareDiluted",
+      "free_cash_flow": "NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquirePropertyPlantAndEquipment (derived)",
+      "gross_profit": "GrossProfit",
+      "net_income": "NetIncomeLoss",
+      "operating_income": "OperatingIncomeLoss",
+      "r_and_d_expense": "ResearchAndDevelopmentExpense",
+      "revenue": "Revenues",
+      "revenue_growth_yoy": "Revenues vs fiscal year ended 2024-12-31 (derived)",
+      "shares_outstanding": "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "total_debt": "LongTermDebt"
+     },
+     "limitations": {
+      "current_debt": "The demo's debt excludes current debt. Tesla's LongTermDebt tag, all that total debt counts, is the noncurrent part only: its FY2025 10-K (https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm) shows $1,569M of current debt beside $6,584M long-term at 2025-12-31. Net debt is understated and any value built on it overstated (/dcf says by how much).",
+      "depreciation_amortization": "D&A is us-gaap:Depreciation — depreciation of property and equipment only. The filer's 10-K facts for this fiscal year report no total D&A concept (DepreciationDepletionAndAmortization, DepreciationAndAmortization, DepreciationAmortizationAndAccretionNet) nor AmortizationOfIntangibleAssets. D&A and EBITDA exclude any amortization and are understated.",
+      "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt."
+     },
+     "not_in_snapshot": [],
+     "missing": []
+    },
+    "mode": "demo"
+   },
+   "dcf": {
+    "ticker": "TSLA",
+    "mode": "demo",
+    "fiscal_year": "FY2025",
+    "valuation_date": "2025-12-31",
+    "valuation_date_basis": "fiscal year-end of the base 10-K: projected cash flows are discounted to this date and net debt is as of it. The value is not rolled forward, so a price quoted on a later date is compared across two dates.",
+    "intrinsic_value_per_share": 13.19435547828175,
+    "enterprise_value_m": 36620.686127378016,
+    "equity_value_m": 46549.686127378016,
+    "terminal_value_pct": 0.8451039039723184,
+    "pv_fcfs_m": 5672.401314985934,
+    "pv_terminal_value_m": 30948.28481239208,
+    "projected_revenues_m": [
+     92047.9059166752,
+     90715.02981357272,
+     90746.46295677254,
+     92123.38191858286,
+     94887.08337614035
+    ],
+    "projected_fcfs_m": [
+     0.689192036032253,
+     808.8997091876415,
+     1618.5143871081773,
+     2465.4965441449767,
+     3387.355875848925
+    ],
+    "assumptions": {
+     "wacc": 0.1,
+     "terminal_growth_rate": 0.03,
+     "n_years": 5,
+     "revenue_growth_rates": [
+      -0.02930699150373628,
+      -0.01448024362780221,
+      0.00034650424813185976,
+      0.01517325212406593,
+      0.03
+     ],
+     "ebitda_margin": 0.09896970272179864,
+     "da_as_pct_revenue": 0.05304396427177913,
+     "capex_as_pct_revenue": 0.08992164678836197,
+     "terminal_capex_as_pct_revenue": 0.05304396427177913,
+     "capex_pct_schedule": [
+      0.08992164678836197,
+      0.08070222615921625,
+      0.07148280553007055,
+      0.06226338490092484,
+      0.05304396427177913
+     ],
+     "nwc_pct_of_revenue_change": 0.02,
+     "tax_rate": 0.21,
+     "base_revenue_m": 94827.0,
+     "net_debt_m": -9929.0,
+     "shares_outstanding_m": 3528.0
+    },
+    "total_debt_concepts": [
+     "LongTermDebt"
+    ],
+    "assumption_sources": {
+     "base_revenue": "reported revenue, FY2025",
+     "shares_outstanding": "reported diluted weighted-average shares over FY2025 (WeightedAverageNumberOfDilutedSharesOutstanding), not the period-end count — as reported in the 10-K filed 2026-01-29 (0001628280-26-003952); not adjusted for any stock split after that filing",
+     "terminal_growth_rate": "default: 3.0%",
+     "wacc": "default: 10.0%",
+     "revenue_growth_rates": "trailing revenue growth, FY2025; linear to terminal growth by year 5",
+     "da_as_pct_revenue": "reported (EBITDA − operating income) / revenue, FY2025 — D&A from Depreciation",
+     "ebitda_margin": "reported EBITDA / revenue, FY2025",
+     "capex_as_pct_revenue": "reported CapEx / revenue, FY2025 (9.0%) in year 1, linear to the D&A rate (5.3%) by year 5",
+     "net_debt": "reported total debt (LongTermDebt) − cash and cash equivalents (CashAndCashEquivalentsAtCarryingValue), FY2025; marketable securities (current and non-current) are not netted, and noncontrolling interests and preferred stock are not deducted from equity value",
+     "nwc_pct_of_revenue_change": "default: 2% of the revenue change",
+     "tax_rate": "default: 21%"
+    },
+    "defaulted_inputs": [
+     "nwc_pct_of_revenue_change",
+     "tax_rate",
+     "terminal_growth_rate",
+     "wacc"
+    ],
+    "assumed_fundamentals": [],
+    "adjustments": {
+     "revenue_growth_rates": "year 1 at trailing revenue growth, FY2025 (-2.9%), moving linearly to the 3.0% terminal rate by year 5",
+     "capex_as_pct_revenue": "reported 9.0% of revenue in year 1, moving linearly to the 5.3% D&A rate by year 5 and held there in the terminal year (steady state: CapEx = D&A)"
+    },
+    "limitations": {
+     "current_debt": "The demo's debt excludes current debt. Tesla's LongTermDebt tag, all that total debt counts, is the noncurrent part only: its FY2025 10-K (https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm) shows $1,569M of current debt beside $6,584M long-term at 2025-12-31. Net debt is understated and the value overstated: at $1,569M, by about $0.44 a share, about 3% of the $13.19 value.",
+     "depreciation_amortization": "D&A is us-gaap:Depreciation — depreciation of property and equipment only. The filer's 10-K facts for this fiscal year report no total D&A concept (DepreciationDepletionAndAmortization, DepreciationAndAmortization, DepreciationAmortizationAndAccretionNet) nor AmortizationOfIntangibleAssets. D&A and EBITDA exclude any amortization and are understated.",
+     "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt.",
+     "marketable_securities": "Net debt nets cash and cash equivalents only. Marketable securities (current and non-current) are not netted, so for a filer that holds them net debt is overstated and the per-share value understated: each $1B not netted is $0.28 a share. Noncontrolling interests and preferred stock are not deducted either, which overstates equity value for a filer that has them.",
+     "free_cash_flow_basis": "The projected free cash flow is not the reported one. Projected: EBIT × (1 − tax) + D&A − CapEx − ΔNWC. It starts from operating income, so stock-based compensation stays a cost and is never added back; it charges a flat 21% tax on EBIT and working capital at 2% of the revenue change; interest and other non-operating income are outside it. Reported (/kpis free_cash_flow): operating cash flow − CapEx, $6,220M for FY2025, which adds stock-based compensation back as non-cash and holds the taxes actually paid, interest and the actual working-capital movement. The projected formula on FY2025's own figures, before growth and ΔNWC, gives −$57M. FinSight does not read a stock-compensation concept, so nothing here splits the difference between the two.",
+     "share_count": "The value divides by the 3,528M diluted weighted-average count for FY2025, which is below the 3,751M shares outstanding at that fiscal year-end (CommonStockSharesOutstanding, same 10-K). On 3,751M, the $13.19 value would be $12.41: $0.78, or 5.9%, lower. The value shown stays on the diluted count; this says how far the choice moves it, not which count is right."
+    },
+    "provenance": {
+     "source": "bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04)",
+     "form": "10-K",
+     "fiscal_year": "FY2025",
+     "fiscal_year_end": "2025-12-31",
+     "accession": "0001628280-26-003952",
+     "filed": "2026-01-29",
+     "figure_filings": {
+      "CashAndCashEquivalentsAtCarryingValue": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "Depreciation": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "EarningsPerShareDiluted": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "GrossProfit": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "LongTermDebt": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "NetIncomeLoss": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "OperatingIncomeLoss": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "PaymentsToAcquirePropertyPlantAndEquipment": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "ResearchAndDevelopmentExpense": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "Revenues": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      },
+      "WeightedAverageNumberOfDilutedSharesOutstanding": {
+       "accession": "0001628280-26-003952",
+       "filed": "2026-01-29"
+      }
+     },
+     "per_share_basis": "as reported in the 10-K filed 2026-01-29 (0001628280-26-003952); not adjusted for any stock split after that filing",
+     "per_share_filed": "2026-01-29",
+     "period_end_shares_above_diluted": 3751.0,
+     "concepts": {
+      "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+      "cash_and_equivalents": "CashAndCashEquivalentsAtCarryingValue",
+      "depreciation": "Depreciation",
+      "ebitda": "OperatingIncomeLoss + Depreciation (derived)",
+      "eps_diluted": "EarningsPerShareDiluted",
+      "free_cash_flow": "NetCashProvidedByUsedInOperatingActivities − PaymentsToAcquirePropertyPlantAndEquipment (derived)",
+      "gross_profit": "GrossProfit",
+      "net_income": "NetIncomeLoss",
+      "operating_income": "OperatingIncomeLoss",
+      "r_and_d_expense": "ResearchAndDevelopmentExpense",
+      "revenue": "Revenues",
+      "revenue_growth_yoy": "Revenues vs fiscal year ended 2024-12-31 (derived)",
+      "shares_outstanding": "WeightedAverageNumberOfDilutedSharesOutstanding",
+      "total_debt": "LongTermDebt"
+     },
+     "limitations": {
+      "current_debt": "The demo's debt excludes current debt. Tesla's LongTermDebt tag, all that total debt counts, is the noncurrent part only: its FY2025 10-K (https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm) shows $1,569M of current debt beside $6,584M long-term at 2025-12-31. Net debt is understated and the value overstated: at $1,569M, by about $0.44 a share, about 3% of the $13.19 value.",
+      "depreciation_amortization": "D&A is us-gaap:Depreciation — depreciation of property and equipment only. The filer's 10-K facts for this fiscal year report no total D&A concept (DepreciationDepletionAndAmortization, DepreciationAndAmortization, DepreciationAmortizationAndAccretionNet) nor AmortizationOfIntangibleAssets. D&A and EBITDA exclude any amortization and are understated.",
+      "finance_leases": "CapEx is cash paid for property and equipment (PaymentsToAcquirePropertyPlantAndEquipment); assets obtained under finance leases are not included, and finance-lease liabilities are not in total debt."
+     },
+     "not_in_snapshot": [],
+     "missing": []
+    }
+   },
+   "sentiment": {
+    "ticker": "TSLA",
+    "mode": "demo",
+    "available": true,
+    "synthetic": true,
+    "results": [
+     {
+      "quarter": "Q4 (synthetic)",
+      "overall_tone": "Neutral",
+      "net_sentiment": 0.0,
+      "guidance_tone": "not_stated",
+      "risk_mentions": 1,
+      "sentiment_drift": 0.0,
+      "synthetic": true,
+      "source": "synthetic placeholder transcript — boilerplate text identical for every company, not an earnings call"
+     }
+    ],
+    "detail": "No real earnings-call transcript was analysed: the sentiment below is computed from a synthetic placeholder transcript and is illustrative only."
+   }
+  }
+ }
+}

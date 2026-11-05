@@ -1,0 +1,87 @@
+name: Bug Report
+description: Report a problem so we can fix it
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report! Please fill out the
+        sections below so we can reproduce and resolve the issue quickly.
+
+        ⚠️ **Do not report security vulnerabilities here.** Please follow
+        [SECURITY.md](https://github.com/ROROK20/FinSight/blob/main/SECURITY.md)
+        and email rohan.s.khiani.vora@gmail.com instead.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear and concise description of the bug.
+      placeholder: When I run the DCF endpoint for ticker X, it raises ...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Minimal, copy-pasteable steps (code, CLI, or API calls).
+      placeholder: |
+        1. `pip install -e ".[dev]"`
+        2. Run `...`
+        3. See error
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / traceback
+      description: Paste any relevant output. Redact API keys and secrets.
+      render: shell
+    validations:
+      required: false
+  - type: input
+    id: component
+    attributes:
+      label: Affected component
+      description: e.g. ingestion/edgar, models/dcf, sentiment, api, frontend
+      placeholder: models/dcf
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: FinSight version / commit
+      placeholder: 0.1.0 or a git SHA
+    validations:
+      required: true
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version
+      placeholder: "3.11"
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 14 / Ubuntu 22.04 / Windows 11
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and this is not a duplicate.
+          required: true
+        - label: I am using a supported version (0.1.x).
+          required: true
