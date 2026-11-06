@@ -295,7 +295,7 @@ environment, is the thing to check.
 
 ### Frontend — `frontend/`
 
-A **Next.js 15.5** app on **React 19** (TypeScript + Tailwind + Recharts),
+A **Next.js 15.5** app on **React 19** (TypeScript + Tailwind),
 running on port **3002**. It is wired to the real API: `lib/api.ts` calls
 `/meta`, `/kpis`, `/dcf` and `/sentiment` on `NEXT_PUBLIC_API_URL`, baked in at
 build time (`http://localhost:8001` under `next dev` only; a production build
@@ -315,12 +315,12 @@ has. A response without `mode` counts as failed. A `/dcf` that refuses the ticke
 the reason and no number. The sentiment panel is tagged Synthetic when
 the engine computed it from the placeholder transcript; the DCF panel states
 its fiscal-year basis, how many inputs were defaults and how many reported
-figures the projection adjusted (each listed on hover).
+figures the projection adjusted (each listed in a numbered note).
 
 A peer table, multi-year history, catalysts and risks have no endpoint behind
 them, so the page names them as absent rather than invent them. Its two charts
 plot the DCF's projected revenue and modelled FCF, from the `/dcf` response; the
-*Reported FCF* tile is the other figure, from `/kpis` (see `dcf.py` above).
+*Reported FCF* row is the other figure, from `/kpis` (see `dcf.py` above).
 
 ---
 

@@ -1,7 +1,8 @@
 # FinSight Frontend
 
-Interactive equity research dashboard built with Next.js 15.5 + React 19 +
-Tailwind + Recharts.
+Interactive equity research note built with Next.js 15.5 + React 19 + Tailwind:
+a printed tearsheet form, with the reported figures and the DCF in tables, and a
+numbered footnote on a figure wherever the engine's response carries its source.
 
 ## Quick start
 

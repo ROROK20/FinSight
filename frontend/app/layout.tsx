@@ -1,6 +1,20 @@
 import type { Metadata } from "next";
+import { Sofia_Sans_Condensed, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { resolveSiteUrl } from "@/lib/site";
+
+// Self-hosted at build: the page makes no request to a font service.
+const serif = Source_Serif_4({
+  subsets: ["latin"],
+  axes: ["opsz"],
+  variable: "--font-serif",
+  display: "swap",
+});
+const stat = Sofia_Sans_Condensed({
+  subsets: ["latin"],
+  variable: "--font-stat",
+  display: "swap",
+});
 
 const OG_TITLE = "FinSight — Automated Equity Research";
 // Filings supply the financials and the DCF, and nothing else here: sentiment
@@ -15,7 +29,7 @@ const SITE_URL = resolveSiteUrl({
 // Share-card images need an absolute URL. Without a site URL, Next.js would
 // resolve them against http://localhost:3000, so they are left out instead.
 const OG_IMAGES = SITE_URL
-  ? [{ url: "/og.png", width: 1200, height: 630, alt: "FinSight equity research dashboard" }]
+  ? [{ url: "/og.png", width: 1200, height: 630, alt: "FinSight research note" }]
   : undefined;
 
 export const metadata: Metadata = {
@@ -55,8 +69,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="font-mono antialiased">{children}</body>
+    <html lang="en" className={`${serif.variable} ${stat.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

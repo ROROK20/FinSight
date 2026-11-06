@@ -18,9 +18,9 @@
 **Demo data, not advice.** The demo runs real SEC filings (retrieved 2026-11-04) beside a dated close (2026-10-30), not a live quote. Its sentiment panel scores a synthetic placeholder transcript and says so. The model value is the mechanical output of one year's figures at generic assumptions: not a price target and not financial advice.
 
 <p align="center">
-  <img src="docs/screenshot.png" alt="FinSight dashboard in offline demo mode (FINSIGHT_DEMO=1) showing AAPL from the bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04, FY2026 10-K): price $344.63 (2026-10-30 close), DCF model value $165.31 (valuation date 2026-09-26), model vs price -52.0%, and the FY2026 financial tiles" width="100%">
+  <img src="docs/screenshot.png" alt="FinSight dashboard in offline demo mode (FINSIGHT_DEMO=1) showing AAPL from the bundled SEC EDGAR companyfacts snapshot (retrieved 2026-11-04, FY2026 10-K): price $344.63 (2026-10-30 close), DCF model value $165.31 (valuation date 2026-09-26), model vs price -52.0%, and the FY2026 financials table" width="100%">
   <br>
-  <em>Demo mode, AAPL, captured 2026-11-04 from the running stack. Every figure shown is what <code>/meta</code>, <code>/kpis</code> and <code>/dcf</code> return. Re-shoot it, and the social-preview card <code>frontend/public/og.png</code> (from the recording a frontend-only deploy shows), with <code>node e2e/capture.mjs</code>, which refuses to write an image whose figures differ from the API's.</em>
+  <em>Demo mode, AAPL, captured 2026-11-05 from the running stack. Every figure shown is what <code>/meta</code>, <code>/kpis</code> and <code>/dcf</code> return. Re-shoot it, and the social-preview card <code>frontend/public/og.png</code> (from the recording a frontend-only deploy shows), with <code>node e2e/capture.mjs</code>, which refuses to write an image whose figures differ from the API's.</em>
 </p>
 
 ---
@@ -67,7 +67,7 @@ The limits are stated too, in every response and [below](#what-the-inputs-cannot
 
 Clone this repo and see the **real engine** driving the
 dashboard in a browser with one command. No API keys. The first build needs a network to
-fetch images and packages; once built, the demo makes no network request.
+fetch images, packages and fonts; once built, the demo makes no network request.
 
 ```bash
 git clone https://github.com/ROROK20/FinSight.git
@@ -106,7 +106,9 @@ sentiment score, which today is of the labelled placeholder transcript.
 to answer `mode: live`; a response with no `mode` counts as a failed call. The
 sentiment panel is tagged **Synthetic** whenever it was computed from the
 placeholder transcript, and the DCF panel shows its basis (fiscal year, 10-K)
-and the number of model defaults it used.
+and the number of model defaults it used. Where the engine's response carries a
+source, the figure has a numbered footnote: the filing and XBRL concept for the
+financials, the price's source, and the DCF's stated input sources.
 
 **Every figure on the page is the engine's.** When a call answers,
 every figure it carries is the engine's. A figure the engine does not report
@@ -116,7 +118,7 @@ replaces it. *Model vs price* is shown only when both the price and the DCF valu
 came from the engine. While the calls are in flight the page shows "…", and a
 slower response for a ticker you have already left is discarded. **A DCF the
 engine refuses** (`422`, or `404` with its reason) is an answer, not a failed
-call: the hero card and the DCF panel show that reason and no number.
+call: the header block and the DCF panel show that reason and no number.
 
 **A deploy with no backend replays a recording of the engine.**
 [`lib/recordedDemo.json`](frontend/lib/recordedDemo.json) holds the engine's own
@@ -337,7 +339,7 @@ markdown = generator.to_markdown(generator.generate("AAPL", kpis=kpis, dcf_resul
 ## Web Demo / Frontend
 
 An interactive dashboard built with **Next.js 15.5** on **React 19**
-(TypeScript + Tailwind + Recharts). It runs on port **3002** and is wired to the
+(TypeScript + Tailwind). It runs on port **3002** and is wired to the
 **real FinSight engine**: headline financials and the DCF come from the live
 FastAPI backend, and so does the sentiment score, computed today on the labelled
 placeholder transcript. Every API call degrades gracefully: the API falls back to
@@ -532,7 +534,7 @@ How the model computes it:
   adds that back, so stock comp stays a cost. It also charges a flat 21% tax on EBIT
   and working capital at 2% of the revenue change, and leaves out interest and other
   non-operating income. **Reported FCF** (`/kpis` `free_cash_flow`, the dashboard's
-  *Reported FCF* tile) is operating cash flow − CapEx: the cash-flow statement adds
+  *Reported FCF* row) is operating cash flow − CapEx: the cash-flow statement adds
   stock comp back as non-cash and holds the taxes actually paid, interest and the
   actual working-capital movement. So the two differ, in either direction. On the
   bundled snapshots, 2026-11-04:

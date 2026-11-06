@@ -8,18 +8,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#0a0e1a",
-        panel: "#0f1525",
-        border: "#1c2540",
-        accent: {
-          green: "#10b981",
-          red: "#ef4444",
-          blue: "#3b82f6",
-          purple: "#a855f7",
+        paper: {
+          DEFAULT: "var(--paper)",
+          deep: "var(--paper-deep)",
+          lift: "var(--paper-lift)",
+        },
+        ink: {
+          DEFAULT: "var(--ink)",
+          soft: "var(--ink-soft)",
+        },
+        hair: "var(--hair)",
+        oxblood: {
+          DEFAULT: "var(--oxblood)",
+          deep: "var(--oxblood-deep)",
         },
       },
       fontFamily: {
-        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+        serif: ["var(--font-serif)", "Georgia", "Times New Roman", "serif"],
+        stat: ["var(--font-stat)", "Arial Narrow", "Helvetica Neue", "sans-serif"],
       },
     },
   },

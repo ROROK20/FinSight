@@ -2,45 +2,652 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * A printed research tearsheet: newsprint salmon, ink tinted toward it, one oxblood.
+ * WCAG contrast on --paper, computed from these values: ink 14.3, ink-soft 8.2,
+ * oxblood 9.3. On --paper-deep: ink 12.6, ink-soft 7.2, oxblood 8.2.
+ * Oxblood marks the sheet's own hand (footnotes, links, focus, caveats, model bars).
+ * It is never put on a figure: a low or negative value is a fact, not an alarm.
+ */
 :root {
-  --bg: #0a0e1a;
+  color-scheme: light;
+  --paper: oklch(0.925 0.04 52);
+  --paper-deep: oklch(0.885 0.052 48);
+  --paper-lift: oklch(0.958 0.022 58);
+  --ink: oklch(0.205 0.018 35);
+  --ink-soft: oklch(0.375 0.03 35);
+  --hair: oklch(0.7 0.055 45);
+  --oxblood: oklch(0.355 0.115 22);
+  --oxblood-deep: oklch(0.29 0.095 22);
 }
 
-* {
-  border-color: rgb(28 37 64);
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: auto;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+    font-optical-sizing: auto;
+    font-kerning: normal;
+    font-variant-numeric: lining-nums proportional-nums;
+    line-height: 1.5;
+  }
+
+  * {
+    border-color: var(--hair);
+  }
+
+  ::selection {
+    background: var(--oxblood);
+    color: var(--paper-lift);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--oxblood);
+    outline-offset: 2px;
+  }
+
+  code {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.875em;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
 }
 
-body {
-  background: linear-gradient(135deg, #0a0e1a 0%, #0d1424 100%);
-  color: #e5e7eb;
-  min-height: 100vh;
-  font-feature-settings: "cv11", "ss01";
+@layer components {
+  .sheet {
+    margin-inline: auto;
+    max-width: 82.5rem;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .sheet {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  /* The statistical voice. Its tabular figures run 25% wider than its default ones,
+     so they are kept to the columns, where figures have to align by place. */
+  .stat {
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-variant-numeric: lining-nums proportional-nums;
+  }
+
+  .label {
+    color: var(--ink-soft);
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    transition: color 150ms ease-out;
+  }
+
+  .link:hover {
+    color: var(--oxblood);
+  }
+
+  /* Reversed slugs: how a printed sheet sets a status line. Square, solid, no stamp. */
+  .slug {
+    display: inline-block;
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    padding: 0.1875rem 0.4375rem;
+  }
+
+  .slug-ink {
+    background: var(--ink);
+    color: var(--paper-lift);
+  }
+
+  .slug-oxblood {
+    background: var(--oxblood);
+    color: var(--paper-lift);
+  }
+
+  .slug-quiet {
+    background: var(--paper-deep);
+    color: var(--ink);
+  }
+
+  .tag {
+    background: var(--oxblood);
+    color: var(--paper-lift);
+    display: inline-block;
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 1.25;
+    padding: 0.0625rem 0.3125rem;
+    text-transform: uppercase;
+    vertical-align: 0.0625em;
+  }
+
+  /* The opening sentence. */
+  .lede {
+    font-size: 1.3125rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.28;
+    max-width: 44em;
+    min-height: 2.56em;
+    text-wrap: pretty;
+  }
+
+  @media (min-width: 768px) {
+    .lede {
+      font-size: 1.75rem;
+      line-height: 1.22;
+    }
+  }
+
+  /* The header block: one printed strip, hairline columns, no containers. */
+  .strip {
+    border-bottom: 1px solid var(--ink);
+    border-top: 2px solid var(--ink);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .strip-cell {
+    padding-block: 0.625rem;
+  }
+
+  .strip-cell + .strip-cell {
+    border-top: 1px solid var(--hair);
+  }
+
+  @media (min-width: 768px) {
+    .strip {
+      grid-template-columns:
+        minmax(0, 1.15fr) minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 1.25fr);
+    }
+
+    .strip-cell {
+      padding-inline: 1rem;
+    }
+
+    .strip-cell:first-child {
+      padding-left: 0;
+    }
+
+    .strip-cell:last-child {
+      padding-right: 0;
+    }
+
+    .strip-cell + .strip-cell {
+      border-left: 1px solid var(--hair);
+      border-top: 0;
+    }
+  }
+
+  .strip-figure {
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 1.75rem;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .fineprint {
+    color: var(--ink-soft);
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 0.875rem;
+    font-variant-numeric: lining-nums proportional-nums;
+    line-height: 1.3;
+  }
+
+  .caveat {
+    color: var(--oxblood);
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .sect {
+    align-items: baseline;
+    border-top: 2px solid var(--ink);
+    column-gap: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.25;
+    padding-top: 0.3125rem;
+  }
+
+  .prose-note {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    max-width: 72ch;
+    text-wrap: pretty;
+  }
+
+  /* A table scrolls inside its own region, never the page. */
+  .scroll-x {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* The statistical array. */
+  .array {
+    border-collapse: collapse;
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-variant-numeric: lining-nums tabular-nums;
+    width: 100%;
+  }
+
+  .array thead th:first-child {
+    width: 36%;
+  }
+
+  .array thead th:nth-child(2) {
+    width: 18%;
+  }
+
+  .array thead th {
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink-soft);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.1875rem 0.5rem 0.1875rem 0;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .array tbody th {
+    color: var(--ink);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.5rem 0.25rem 0;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .array tbody td {
+    font-size: 1rem;
+    line-height: 1.25;
+    padding: 0.25rem 0.5rem 0.25rem 0;
+  }
+
+  .array tbody tr {
+    border-bottom: 1px solid var(--hair);
+  }
+
+  .array .num {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .array .figure {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .array .worked {
+    color: var(--ink-soft);
+    font-size: 0.9375rem;
+    letter-spacing: -0.015em;
+  }
+
+  .array .mark {
+    padding-right: 0;
+    width: 1.5rem;
+  }
+
+  /* Label-and-value rows that are not a table of columns: the DCF steps, the sentiment lines. */
+  .steps {
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .step {
+    align-items: center;
+    border-bottom: 1px solid var(--hair);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 6.5rem 5.5rem 1.5rem;
+    min-height: 1.875rem;
+  }
+
+  .step-pair {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .step-head {
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink-soft);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    min-height: 0;
+    padding-block: 0.1875rem;
+  }
+
+  .step-total {
+    border-bottom: 1px solid var(--ink);
+    border-top: 1px solid var(--ink);
+    margin-top: -1px;
+  }
+
+  /* Small caps here are synthesised at 0.7 of the size: 1.16rem sets them level with
+     the array's 0.8125rem capitals, and the text stays in its reported case. */
+  .step dt {
+    font-size: 1.16rem;
+    font-variant-caps: all-small-caps;
+    font-weight: 600;
+    letter-spacing: 0.035em;
+    line-height: 1.1;
+  }
+
+  .step-op {
+    color: var(--ink-soft);
+    display: inline-block;
+    font-size: 0.875rem;
+    font-variant-caps: normal;
+    letter-spacing: 0;
+    width: 1.1em;
+  }
+
+  .step .figure {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .step .worked {
+    color: var(--ink-soft);
+    font-size: 0.9375rem;
+    letter-spacing: -0.015em;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* A numbered footnote marker. The box keeps a 24 px target around a small figure. */
+  .fn {
+    align-items: center;
+    color: var(--oxblood);
+    display: inline-flex;
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 0.75rem;
+    font-variant-numeric: lining-nums;
+    font-weight: 700;
+    height: 1.5rem;
+    justify-content: center;
+    line-height: 1;
+    min-width: 1.5rem;
+    text-decoration: none;
+    transition: background-color 150ms ease-out;
+  }
+
+  .fn:hover {
+    background: var(--paper-deep);
+    text-decoration: underline;
+  }
+
+  .fn-sup {
+    margin-block: -0.25rem;
+    margin-left: -0.25rem;
+    transform: translateY(-0.5em);
+    vertical-align: baseline;
+  }
+
+  /* Two plots side by side share rows, so a longer caption cannot push one set of bars lower. */
+  .plots {
+    display: grid;
+    row-gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .plots {
+      column-gap: 2.5rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 0;
+    }
+
+    .plots > section {
+      display: grid;
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+    }
+  }
+
+  /* The DCF's own years: bars set over the figure they plot, as a printed array does. */
+  .plot {
+    border-collapse: collapse;
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-variant-numeric: lining-nums tabular-nums;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .plot th {
+    color: var(--ink-soft);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.1875rem 0.25rem;
+    text-align: center;
+  }
+
+  .plot td {
+    padding: 0;
+    text-align: center;
+  }
+
+  .plot-well {
+    height: 4.5rem;
+    margin-inline: auto;
+    position: relative;
+    width: 58%;
+  }
+
+  .plot-bar {
+    background-color: var(--paper-lift);
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--oxblood) 0 1.5px,
+      transparent 1.5px 4px
+    );
+    border: 1px solid var(--oxblood);
+    left: 0;
+    min-height: 1px;
+    position: absolute;
+    right: 0;
+  }
+
+  .plot-base {
+    background: var(--ink);
+    height: 1px;
+    left: -30%;
+    position: absolute;
+    right: -30%;
+  }
+
+  .plot-figure {
+    border-top: 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    padding-block: 0.25rem;
+    white-space: nowrap;
+  }
+
+  /* Footnotes at the foot of the sheet. */
+  .notes {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    list-style: decimal;
+    padding-left: 1.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    .notes {
+      column-count: 2;
+      column-gap: 3rem;
+    }
+  }
+
+  .notes li {
+    break-inside: avoid;
+    margin-bottom: 0.3125rem;
+    overflow-wrap: anywhere;
+    padding-inline: 0.25rem;
+    scroll-margin-top: 1rem;
+    transition: background-color 200ms ease-out;
+  }
+
+  .notes li::marker {
+    color: var(--oxblood);
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-variant-numeric: lining-nums tabular-nums;
+    font-weight: 700;
+  }
+
+  .notes li:target {
+    background: var(--paper-deep);
+  }
+
+  .note-label {
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-weight: 700;
+  }
+
+  /* Inline with padding: 24 px to tap, and a no-break space holds it to the last word. */
+  .note-back {
+    color: var(--oxblood);
+    padding: 0.25rem 0.4375rem;
+    text-decoration: none;
+  }
+
+  .note-back:hover {
+    text-decoration: underline;
+  }
+
+  /* Controls. Plain, square, labelled. */
+  .field {
+    background: var(--paper-lift);
+    border: 1px solid var(--ink-soft);
+    color: var(--ink);
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    height: 2.25rem;
+    letter-spacing: 0.02em;
+    min-width: 0;
+    padding-inline: 0.5rem;
+  }
+
+  .field::placeholder {
+    color: var(--ink-soft);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .button {
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    color: var(--paper-lift);
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    height: 2.25rem;
+    letter-spacing: 0.02em;
+    padding-inline: 0.875rem;
+    transition: background-color 150ms ease-out, border-color 150ms ease-out;
+  }
+
+  .button:hover {
+    background: var(--oxblood);
+    border-color: var(--oxblood);
+  }
+
+  .quick {
+    border: 1px solid transparent;
+    font-family: var(--font-stat), "Arial Narrow", "Helvetica Neue", sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    min-height: 1.75rem;
+    padding-inline: 0.4375rem;
+    transition: background-color 150ms ease-out, color 150ms ease-out;
+  }
+
+  .quick:hover {
+    background: var(--paper-deep);
+  }
+
+  .quick[aria-pressed="true"] {
+    background: var(--oxblood);
+    color: var(--paper-lift);
+  }
+
+  /* Long and short caveats flow in columns, so a long one leaves no hole beside a short one. */
+  .caveats > li {
+    break-inside: avoid;
+    margin-bottom: 0.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  @media (min-width: 1024px) {
+    .caveats {
+      column-count: 2;
+      column-gap: 2.5rem;
+    }
+  }
+
+  .notice {
+    background: var(--paper-deep);
+    border: 1px solid var(--ink-soft);
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    padding: 0.5625rem 0.75rem;
+    text-wrap: pretty;
+  }
+
+  .notice-stop {
+    border-color: var(--oxblood);
+  }
+
+  .notice-stop strong {
+    color: var(--oxblood);
+  }
 }
 
-.glow {
-  box-shadow: 0 0 40px -10px rgba(59, 130, 246, 0.3);
-}
-
-.metric-card {
-  background: linear-gradient(180deg, #0f1525 0%, #0a0f1f 100%);
-  border: 1px solid rgb(28 37 64);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  transition: border-color 0.2s ease;
-}
-
-.metric-card:hover {
-  border-color: rgb(59 130 246 / 0.5);
-}
-
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #0a0e1a;
-}
-::-webkit-scrollbar-thumb {
-  background: #1c2540;
-  border-radius: 3px;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }

@@ -4,10 +4,10 @@
  * rating, price target, sample or synthetic text may appear.
  *
  *   docs/screenshot.png      the README hero (1440 CSS px wide, @2x, cropped to the
- *                            header, hero card and financial tiles), from the running
+ *                            header, hero card and financials table), from the running
  *                            demo stack: its badge reads "Demo data"
  *   frontend/public/og.png   the social-preview card (2400×1260: 1600×840 CSS px at
- *                            3/2 scale; panels below the financial tiles are hidden:
+ *                            3/2 scale; panels below the financials table are hidden:
  *                            the sentiment panel is synthetic), from what a shared link
  *                            lands on, a deploy with no backend: its badge says it is a
  *                            recording.
@@ -101,15 +101,15 @@ async function capture(browser, name, t, expected) {
   await page.getByText("valuation date", { exact: false }).first().waitFor({ timeout: 30000 });
   await page.evaluate(() => document.fonts.ready);
 
-  const grid = page.locator(".metric-card").first().locator("xpath=..");
+  const grid = page.locator('[data-testid="financial-array"]');
   const box = await grid.boundingBox();
   const height = t.height || Math.ceil(box.y + box.height + 16);
-  if (box.y + box.height > height) throw new Error(`${name}: the financial tiles do not fit in ${height}px`);
-  // Everything after the tiles is hidden for a fixed-size card (it would
-  // otherwise peek in under the tiles); the sentiment panel there is synthetic.
+  if (box.y + box.height > height) throw new Error(`${name}: the financials table does not fit in ${height}px`);
+  // Everything after the table is hidden for a fixed-size card (it would
+  // otherwise peek in under it); the sentiment panel there is synthetic.
   await page.evaluate(() => {
-    const tiles = document.querySelector(".metric-card").parentElement;
-    for (let n = tiles.nextElementSibling; n; n = n.nextElementSibling) n.style.visibility = "hidden";
+    const array = document.querySelector('[data-testid="financial-array"]');
+    for (let n = array.nextElementSibling; n; n = n.nextElementSibling) n.style.visibility = "hidden";
   });
   await sleep(500);
 

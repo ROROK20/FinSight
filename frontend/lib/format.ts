@@ -27,3 +27,8 @@ export function fmtMoney(v: number): string {
     `$${a.toLocaleString("en-US")}M`;
   return `${sign(v)}${body}`;
 }
+
+/** A figure in $M, unscaled, as a filing prints it: 478834 → "478,834", 0.7 → "0.7". */
+export function fmtMillions(v: number): string {
+  return v.toLocaleString("en-US", { maximumFractionDigits: Math.abs(v) < 10 ? 1 : 0 });
+}

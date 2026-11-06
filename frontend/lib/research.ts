@@ -11,6 +11,7 @@ import type {
   DcfResponse,
   KpisResponse,
   MetaResponse,
+  Provenance,
   SentimentResponse,
 } from "./api";
 
@@ -25,6 +26,27 @@ export interface ProjectionPoint {
   period: string;
   revenue: number;
   fcf: number;
+}
+
+/** The /kpis figures in $M behind the page's ratios, as the engine read them. */
+export interface ReportedFigures {
+  grossProfit: Figure;
+  operatingIncome: Figure;
+  netIncome: Figure;
+  totalDebt: Figure;
+  cash: Figure;
+}
+
+/**
+ * What the engine's responses say about where their figures came from, passed
+ * through untouched for the page's footnotes. A field the response does not carry
+ * stays absent, so the page cites nothing the engine did not.
+ */
+export interface FigureSources {
+  priceSource?: string;
+  kpiProvenance?: Provenance;
+  dcfProvenance?: Provenance;
+  assumptionSources?: Record<string, string>;
 }
 
 export interface CompanyResearch {
@@ -88,6 +110,8 @@ export interface CompanyResearch {
   gapWithheld?: string;
   /** The engine's own reason for refusing a DCF (HTTP 422/404): no figure is shown. */
   dcfRefusal?: string;
+  reported?: ReportedFigures;
+  sources?: FigureSources;
 }
 
 /**
@@ -245,6 +269,13 @@ export function mergeEngineData(ticker: string, parts: EngineParts): CompanyRese
     out.fcf = num(kpis.free_cash_flow);
     out.eps = num(kpis.eps_diluted);
     out.fiscalYear = kpis.period || undefined;
+    out.reported = {
+      grossProfit: num(kpis.gross_profit),
+      operatingIncome: num(kpis.operating_income),
+      netIncome: num(kpis.net_income),
+      totalDebt: num(kpis.total_debt),
+      cash: num(kpis.cash_and_equivalents),
+    };
   }
 
   if (dcf) {
@@ -296,6 +327,13 @@ export function mergeEngineData(ticker: string, parts: EngineParts): CompanyRese
   }
 
   if (sentiment?.available === false) out.sentimentUnavailable = sentiment.detail;
+
+  out.sources = {
+    priceSource: meta?.price_source,
+    kpiProvenance: kpis?.provenance,
+    dcfProvenance: dcf?.provenance,
+    assumptionSources: dcf?.assumption_sources,
+  };
 
   // The gap only from an engine price AND an engine model value, and never
   // across a stock split: the share count is as its 10-K reported it, Yahoo's

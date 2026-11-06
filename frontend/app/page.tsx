@@ -6,17 +6,9 @@ import {
   type CompanyResearch, type Figure, type GuidanceTone, type Recording,
 } from "@/lib/research";
 import recordedDemo from "@/lib/recordedDemo.json";
-import {
-  api, tagged, demoScope, engineProblem, noDataReason, API_URL, type HealthResponse,
-} from "@/lib/api";
-import { fmtMoney as money, fmtPct as pct, fmtUsd as usd } from "@/lib/format";
-import {
-  Search, FileText, Github,
-  AlertTriangle, Sparkles, BarChart3, DollarSign, Wifi, WifiOff, Loader2,
-} from "lucide-react";
-import {
-  BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip,
-} from "recharts";
+import { api, tagged, demoScope, engineProblem, noDataReason, type HealthResponse } from "@/lib/api";
+import { fmtMillions, fmtMoney as money, fmtPct as pct, fmtUsd as usd } from "@/lib/format";
+import { buildNotes, type NoteKey, type NoteSheet } from "@/lib/notes";
 import clsx from "clsx";
 
 /** The engine's answers, recorded (scripts/record_demo.py): what a no-backend deploy replays. */
@@ -61,57 +53,50 @@ function overallMode(parts: Parts): DataMode {
  */
 const MODE_COPY: Record<
   DataMode,
-  { label: string; cls: string; Icon: typeof Wifi; title: string; footer: string }
+  { label: string; cls: string; title: string; footer: string }
 > = {
   live: {
     label: "Live data",
-    cls: "bg-accent-green/15 text-accent-green border-accent-green/40",
-    Icon: Wifi,
+    cls: "slug-ink",
     title:
       "Headline financials and the DCF come from the live FinSight engine (SEC EDGAR 10-K data). A panel tagged Synthetic was computed from a placeholder transcript.",
     footer: "Live data from the FinSight engine · a panel tagged Synthetic used a placeholder transcript",
   },
   demo: {
     label: "Demo data",
-    cls: "bg-accent-blue/15 text-accent-blue border-accent-blue/40",
-    Icon: Wifi,
+    cls: "slug-ink",
     title:
       "Backend reachable, serving bundled SEC filings and dated prices through the real engine. The panel tagged Synthetic was computed from a placeholder transcript.",
     footer: "Demo: bundled SEC filings via the real engine · the panel tagged Synthetic used a placeholder transcript",
   },
   partial: {
     label: "Partial data",
-    cls: "bg-orange-500/15 text-orange-400 border-orange-500/40",
-    Icon: AlertTriangle,
+    cls: "slug-oxblood",
     title: "Some engine calls failed. Their panels read Unavailable; the rest come from the engine.",
     footer: "Partial — panels reading Unavailable had a failed engine call; nothing replaces them",
   },
   recorded: {
     label: "Engine recording · bundled SEC snapshots · no live backend",
-    cls: "bg-accent-blue/15 text-accent-blue border-accent-blue/40",
-    Icon: WifiOff,
+    cls: "slug-ink",
     title: `A recording of the FinSight engine running on its bundled SEC snapshots (retrieved ${RECORDING.snapshot_retrieved}), captured ${RECORDING.captured}. No live backend answered, so nothing was fetched.`,
     footer: `Recording of the FinSight engine on bundled SEC snapshots, captured ${RECORDING.captured} · no live backend`,
   },
   empty: {
     label: "Offline · no data",
-    cls: "bg-yellow-500/15 text-yellow-400 border-yellow-500/40",
-    Icon: WifiOff,
+    cls: "slug-oxblood",
     title: "No live backend answered and the recording does not hold this ticker, so no figure is shown.",
     footer: "Offline — no live backend, and this ticker is not in the recording, so no figure is shown",
   },
   uncovered: {
     label: "Not in demo set",
-    cls: "bg-orange-500/15 text-orange-400 border-orange-500/40",
-    Icon: AlertTriangle,
+    cls: "slug-oxblood",
     title:
       "The engine is in offline demo mode, which covers only its bundled tickers and makes no network requests. This ticker was not looked up, so no figure is shown.",
     footer: "Demo engine — this ticker is not bundled, so nothing was looked up and no figure is shown",
   },
   loading: {
     label: "Loading engine…",
-    cls: "bg-panel text-gray-400 border-border",
-    Icon: Loader2,
+    cls: "slug-quiet",
     title: "Contacting backend",
     footer: "Contacting the FinSight engine…",
   },
@@ -153,6 +138,104 @@ function modeCopy(mode: DataMode, engineSaid: string | null) {
     };
   }
   return copy;
+}
+
+/** Marks a panel whose engine call failed. No figure stands in for it. */
+const UnavailableTag = ({ what }: { what: string }) => (
+  <span
+    title={`${what}: the engine call behind it failed or returned an unverifiable response, so nothing is shown.`}
+    className="tag"
+  >
+    Unavailable
+  </span>
+);
+
+/** Marks the sentiment panel when it was computed from the placeholder transcript. */
+const SyntheticTag = () => (
+  <span
+    title="Computed from a synthetic placeholder transcript: boilerplate text that reads the same for every company, not an earnings call. Illustrative only. Live transcripts are a third-party scrape, off unless the server opts in; when on and the page is unavailable, the engine falls back to this placeholder."
+    className="tag"
+  >
+    Synthetic
+  </span>
+);
+
+/** A numbered footnote marker, present only when the engine's response carries a note for the figure. */
+const Fn = ({ sheet, k, raised }: { sheet: NoteSheet; k: NoteKey; raised?: boolean }) => {
+  const n = sheet.number[k];
+  if (n == null) return null;
+  return (
+    <a id={`ref-${k}`} href={`#note-${k}`} aria-label={`Note ${n}`} className={clsx("fn", raised && "fn-sup")}>
+      {n}
+    </a>
+  );
+};
+
+/** One step of the DCF: a dt and its dds, so the page reads label, value, $M, note. */
+const Step = ({
+  op, label, title, value, millions, sheet, note, total,
+}: {
+  op?: string;
+  label: string;
+  title?: string;
+  value: string;
+  millions?: Figure;
+  sheet: NoteSheet;
+  note?: NoteKey;
+  total?: boolean;
+}) => (
+  <div className={clsx("step", total && "step-total")}>
+    <dt title={title}>
+      {op && <span className="step-op" aria-hidden="true">{op}</span>}
+      {label}
+    </dt>
+    <dd className="figure">{value}</dd>
+    <dd className="worked">{millions == null ? "" : fmtMillions(millions)}</dd>
+    <dd>{note && <Fn sheet={sheet} k={note} />}</dd>
+  </div>
+);
+
+/** Dates, accession numbers and "10-K" stay whole: a line must not break one at its hyphen. */
+const Whole = ({ text }: { text: string }) => (
+  <>
+    {text.split(/(\d{10}-\d{2}-\d{6}|\d{4}-\d{2}-\d{2}|\b10-K\b)/).map((part, i) =>
+      i % 2 ? <span key={i} className="whitespace-nowrap">{part}</span> : part,
+    )}
+  </>
+);
+
+/** A ratio's working in $M, shown only when the two figures really give the ratio. */
+function working(top: Figure | undefined, bottom: Figure, ratio: Figure): string | null {
+  if (top == null || bottom == null || ratio == null || bottom === 0) return null;
+  if (Math.abs(top / bottom - ratio) > 1e-6) return null;
+  return `${fmtMillions(top)} ÷ ${fmtMillions(bottom)}`;
+}
+
+/**
+ * The sentence the note opens on. Every value in it is one the header block below
+ * renders, and it always says what the model value is. Each way the engine can
+ * answer has its own sentence, so a failed or refused DCF never reads as a value.
+ */
+function openingSentence(d: CompanyResearch, pending: boolean, dcfFailed: boolean): string {
+  if (pending) return `Contacting the FinSight engine for ${d.ticker}…`;
+  const name = d.companyName;
+  if (d.dcfRefusal) {
+    return `The engine refused to value ${name}, so this note has no model value.`;
+  }
+  if (d.modelValue == null) {
+    return dcfFailed
+      ? `The DCF call for ${name} failed, so this note has no model value.`
+      : `The engine reported no DCF model value for ${name}.`;
+  }
+  const value = `${name}’s DCF model value is ${usd(d.modelValue)} a share`;
+  const source = d.fiscalYear ? `its ${d.fiscalYear} 10-K` : "one fiscal year’s reported figures";
+  const what = `a mechanical output of ${source} at the engine’s assumptions, not a price target`;
+  if (d.modelVsPrice != null && d.currentPrice != null) {
+    const gap = `${pct(Math.abs(d.modelVsPrice))} ${d.modelVsPrice >= 0 ? "above" : "below"}`;
+    const close = d.priceDate ? `close of ${d.priceDate}` : "latest quote";
+    return `${value}, ${gap} the ${usd(d.currentPrice)} ${close}: ${what}.`;
+  }
+  return `${value}: ${what}. It is not compared with a price here.`;
 }
 
 export default function Home() {
@@ -245,44 +328,7 @@ export default function Home() {
     load(selected);
   }, [selected, load]);
 
-  const ModeBadge = () => {
-    const cfg = modeCopy(mode, engineSaid);
-    const { Icon } = cfg;
-    return (
-      <span
-        title={cfg.title}
-        className={clsx(
-          "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold border",
-          cfg.cls,
-        )}
-      >
-        <Icon className={clsx("w-3.5 h-3.5", mode === "loading" && "animate-spin")} />
-        {cfg.label}
-      </span>
-    );
-  };
-
-  /** Marks a panel whose engine call failed. No figure stands in for it. */
-  const UnavailableTag = ({ what }: { what: string }) => (
-    <span
-      title={`${what}: the engine call behind it failed or returned an unverifiable response, so nothing is shown.`}
-      className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider bg-orange-500/10 text-orange-300 border border-orange-500/30"
-    >
-      <AlertTriangle className="w-2.5 h-2.5" aria-hidden="true" />
-      Unavailable
-    </span>
-  );
-
-  /** Marks the sentiment panel when it was computed from the placeholder transcript. */
-  const SyntheticTag = () => (
-    <span
-      title="Computed from a synthetic placeholder transcript — boilerplate text that reads the same for every company, not an earnings call. Illustrative only. Live transcripts are a third-party scrape, off unless the server opts in; when on and the page is unavailable, the engine falls back to this placeholder."
-      className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider bg-yellow-500/10 text-yellow-500/90 border border-yellow-500/30"
-    >
-      <AlertTriangle className="w-2.5 h-2.5" aria-hidden="true" />
-      Synthetic
-    </span>
-  );
+  const badge = modeCopy(mode, engineSaid);
 
   // While the engine calls are in flight no figure is shown at all. A null figure
   // is one the engine did not report, or one whose call failed; each says so.
@@ -294,67 +340,76 @@ export default function Home() {
   const fmtMoney = (n: Figure, part: Part) => show(n, money, part);
   // Nothing to show for this ticker: the page states why, and no panel renders.
   const noData = mode === "empty" || mode === "uncovered";
+  const sheet = buildNotes(data);
+  const limitations = limitationRows(data.dcfLimitations);
 
   return (
-    <main className="min-h-screen">
-      <header className="border-b border-border bg-panel/30 backdrop-blur sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-wrap gap-3 items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-gradient-to-br from-purple-500 to-accent-blue rounded-lg flex items-center justify-center glow">
-              <FileText className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h1 className="text-lg font-bold tracking-tight">FinSight</h1>
-              <p className="text-xs text-gray-500">Automated Equity Research</p>
-            </div>
+    <main className="min-h-screen border-t-[6px] border-oxblood">
+      <header className="border-b-2 border-ink">
+        <div className="sheet flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-2.5">
+          <div className="flex flex-wrap items-baseline gap-x-3">
+            <h1 className="text-[1.375rem] font-semibold leading-tight">FinSight</h1>
+            <p className="stat text-[0.9375rem] text-ink-soft">Automated Equity Research</p>
           </div>
-          <div className="flex items-center gap-3">
-            <ModeBadge />
-            <a href="https://github.com/ROROK20/FinSight" className="flex items-center gap-2 px-3 py-1.5 text-xs border border-border hover:border-accent-blue rounded-md">
-              <Github className="w-3.5 h-3.5" /> View Source
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span title={badge.title} className={clsx("slug", badge.cls)}>
+              {badge.label}
+            </span>
+            <a href="https://github.com/ROROK20/FinSight" className="link stat inline-flex min-h-6 items-center text-[0.9375rem]">
+              View Source
             </a>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Search */}
-        <div className="bg-panel border border-border rounded-lg p-4 mb-6 flex gap-3 items-center">
-          <Search className="w-5 h-5 text-gray-500" aria-hidden="true" />
-          <label htmlFor="ticker-search" className="sr-only">
-            Stock ticker symbol
-          </label>
-          <input
-            id="ticker-search"
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value.toUpperCase().trim())}
-            onKeyDown={(e) => e.key === "Enter" && query && setSelected(query)}
-            placeholder="Enter ticker (e.g. AAPL)"
-            aria-label="Stock ticker symbol"
-            className="flex-1 min-w-0 bg-transparent outline-none text-lg tracking-wider"
-          />
-          <button
-            onClick={() => query && setSelected(query)}
-            aria-label={`Analyze ${query || "ticker"}`}
-            className="px-4 py-2 bg-accent-blue/20 hover:bg-accent-blue/30 text-accent-blue rounded-md text-sm font-semibold transition-colors"
-          >
-            Analyze
-          </button>
+      <div className="sheet pb-8">
+        {/* Ticker controls */}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 py-2.5">
+          <div className="flex min-w-0 items-center gap-2">
+            <label htmlFor="ticker-search" className="label">
+              Ticker
+            </label>
+            <input
+              id="ticker-search"
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value.toUpperCase().trim())}
+              onKeyDown={(e) => e.key === "Enter" && query && setSelected(query)}
+              placeholder="Enter ticker (e.g. AAPL)"
+              className="field w-44"
+            />
+            <button
+              onClick={() => query && setSelected(query)}
+              aria-label={`Analyze ${query || "ticker"}`}
+              className="button"
+            >
+              Analyze
+            </button>
+          </div>
+          <div className="flex flex-wrap items-center gap-x-1 gap-y-1">
+            <span className="label mr-1">Quick:</span>
+            {RECORDED_TICKERS.map((t) => (
+              <button
+                key={t}
+                onClick={() => { setQuery(t); setSelected(t); }}
+                aria-label={`Analyze ${t}`}
+                aria-pressed={selected === t}
+                className="quick"
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+          {demoScope(engine) && (
+            <p className="fineprint">
+              Offline demo engine: bundled SEC data for {demoScope(engine)!.join(", ")} only — other
+              tickers are not looked up.
+            </p>
+          )}
         </div>
 
-        {demoScope(engine) && (
-          <p className="-mt-4 mb-4 text-xs text-gray-500">
-            Offline demo engine: bundled SEC data for {demoScope(engine)!.join(", ")} only — other
-            tickers are not looked up.
-          </p>
-        )}
-
         {mode === "recorded" && (
-          <div
-            role="status"
-            className="mb-6 rounded-lg border border-accent-blue/40 bg-accent-blue/10 p-4 text-sm text-blue-200"
-          >
+          <div role="status" className="notice mb-4">
             <strong>A recording, not live data.</strong>{" "}
             {noDataReason(engineSaid)}, so
             this page replays the FinSight engine&apos;s own answers for {data.ticker}: computed from
@@ -365,10 +420,7 @@ export default function Home() {
         )}
 
         {mode === "empty" && (
-          <div
-            role="status"
-            className="mb-6 rounded-lg border border-yellow-500/40 bg-yellow-500/10 p-4 text-sm text-yellow-200"
-          >
+          <div role="status" className="notice notice-stop mb-4">
             <strong>No data for {data.ticker}.</strong>{" "}
             {noDataReason(engineSaid)}, and
             the recording of the engine holds only {RECORDED_TICKERS.join(", ")}, so nothing has read{" "}
@@ -379,10 +431,7 @@ export default function Home() {
         )}
 
         {mode === "uncovered" && (
-          <div
-            role="status"
-            className="mb-6 rounded-lg border border-orange-500/40 bg-orange-500/10 p-4 text-sm text-orange-200"
-          >
+          <div role="status" className="notice notice-stop mb-4">
             <strong>{data.ticker} is not in the offline demo set</strong> (
             {demoScope(engine)?.join(", ")}). The engine runs in demo mode (
             <code>FINSIGHT_DEMO=1</code>), which makes no network requests, so {data.ticker} was not
@@ -392,220 +441,197 @@ export default function Home() {
           </div>
         )}
 
-        <div className="flex gap-2 mb-6 flex-wrap">
-          <span className="text-xs text-gray-500 self-center mr-2">Quick:</span>
-          {RECORDED_TICKERS.map((t) => (
-            <button
-              key={t}
-              onClick={() => { setQuery(t); setSelected(t); }}
-              aria-label={`Analyze ${t}`}
-              aria-pressed={selected === t}
-              className={clsx(
-                "px-3 py-1 text-xs rounded border transition-colors",
-                selected === t
-                  ? "bg-accent-blue/20 border-accent-blue text-accent-blue"
-                  : "border-border hover:border-accent-blue text-gray-400",
-              )}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
-
         {!noData && (
         <>
         {/* Hero card */}
-        <div className="bg-gradient-to-br from-panel to-panel/50 border border-border rounded-lg p-6 mb-6">
-          <div className="flex items-start justify-between flex-wrap gap-4">
-            <div>
-              <div className="flex items-center gap-3 mb-1">
-                <h2 className="text-3xl font-bold tracking-tight">{data.ticker}</h2>
-                {data.sector && (
-                  <span className="text-xs text-gray-500 border border-border px-2 py-0.5 rounded">{data.sector}</span>
-                )}
-              </div>
-              <p className="text-gray-400 mb-4">{data.companyName}</p>
-              <div className="flex flex-wrap gap-x-8 gap-y-3">
-                <div>
-                  <div className="text-xs text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
-                    Price {missing("meta") && <UnavailableTag what="The price" />}
-                  </div>
-                  <div className="text-2xl font-bold tabular-nums">{fmtUsd(data.currentPrice, "meta")}</div>
-                  {data.priceDate && (
-                    <div className="text-[10px] text-gray-500">close {data.priceDate} · not a live quote</div>
-                  )}
-                </div>
-                <div>
-                  <div className="text-xs text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
-                    DCF model value {missing("dcf") && <UnavailableTag what="The DCF model value" />}
-                  </div>
-                  <div className="text-2xl font-bold tabular-nums text-accent-blue">
-                    {fmtUsd(data.modelValue, "dcf")}
-                  </div>
-                  {!pending && data.dcfRefusal && (
-                    <div role="note" className="max-w-xs text-[10px] text-orange-300">
-                      No DCF value: {data.dcfRefusal}
-                    </div>
-                  )}
-                  {!pending && data.dcfAssumed && data.dcfAssumed.length > 0 && (
-                    <div role="note" className="max-w-xs text-[10px] text-orange-300">
-                      Rests on figures the filing did not report, assumed by the model:{" "}
-                      {data.dcfAssumed.join(", ")}.
-                    </div>
-                  )}
-                  {!pending && data.dcfLimitations?.current_debt && (
-                    <div role="note" className="max-w-xs text-[10px] text-orange-300">
-                      Current debt may be missing from this value: see What the DCF&apos;s inputs
-                      cannot show, below.
-                    </div>
-                  )}
-                  {!pending && data.dcfLimitations?.share_count && (
-                    <div role="note" className="max-w-xs text-[10px] text-orange-300">
-                      The year-end share count would lower this value: see What the DCF&apos;s
-                      inputs cannot show, below.
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <div className="text-xs text-gray-500 uppercase tracking-wider">Model vs price</div>
-                  <div
-                    className="text-2xl font-bold tabular-nums text-gray-200"
-                    title={
-                      data.modelVsPrice == null && !pending
-                        ? "Needs both a reported price and a DCF model value from the engine."
-                        : undefined
-                    }
-                  >
-                    {!pending && data.modelVsPrice != null && data.modelVsPrice >= 0 ? "+" : ""}
-                    {pending ? "…" : data.modelVsPrice == null ? "—" : pct(data.modelVsPrice)}
-                  </div>
-                  {!pending && data.gapWithheld && (
-                    <div role="note" className="max-w-xs text-[10px] text-orange-300">
-                      {data.gapWithheld}
-                    </div>
-                  )}
-                  {!pending && data.modelVsPrice == null && !data.gapWithheld && (
-                    <div className="max-w-xs text-[10px] text-gray-500">
-                      {missing("meta") || missing("dcf")
-                        ? "Not compared: an engine call behind it failed."
-                        : "Not compared: it needs both a reported price and a DCF model value."}
-                    </div>
-                  )}
-                  {data.valuationDate && (
-                    <div
-                      className="text-[10px] text-gray-500"
-                      title="The DCF is struck at the base fiscal year-end (cash flows discounted to it, net debt as of it) and is not rolled forward, so the gap compares values on two different dates."
-                    >
-                      valuation date {data.valuationDate} · price{" "}
-                      {data.priceDate ? `close ${data.priceDate}` : "latest quote"}
-                    </div>
-                  )}
-                </div>
-              </div>
-              {missing("dcf") ? (
-                <p className="mt-3 max-w-md text-[11px] text-gray-500">
-                  The /dcf call failed, so there is no model value here. Nothing stands in for it.
-                </p>
-              ) : data.dcfRefusal ? null : (
-                <p className="mt-3 max-w-md text-[11px] text-gray-500">
-                  A mechanical DCF output from one fiscal year&apos;s reported figures at the
-                  engine&apos;s assumptions (by default a generic 10% WACC and 3% terminal growth) — not
-                  a price target, a rating or investment advice.
+        <div>
+          <p className="lede mb-3.5 mt-1">
+            <Whole text={openingSentence(data, pending, missing("dcf"))} />
+          </p>
+          <div className="strip">
+            <div className="strip-cell">
+              <h2 className="text-[1.375rem] font-semibold leading-tight">{data.companyName}</h2>
+              {(data.companyName !== data.ticker || data.sector) && (
+                <p className="stat mt-0.5 text-[0.9375rem] text-ink-soft">
+                  {data.companyName !== data.ticker && data.ticker}
+                  {data.companyName !== data.ticker && data.sector && " · "}
+                  {data.sector}
                 </p>
               )}
             </div>
-            <div className="flex-1 max-w-md text-sm text-gray-300 leading-relaxed">
-              <div className="text-xs text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1">
-                <Sparkles className="w-3 h-3" /> Summary
+            <div className="strip-cell">
+              <div className="label flex flex-wrap items-center gap-1.5">
+                Price {missing("meta") && <UnavailableTag what="The price" />}
               </div>
-              {pending ? "Loading…" : data.investmentThesis}
+              <div className="strip-figure mt-0.5">
+                {fmtUsd(data.currentPrice, "meta")}
+                <Fn sheet={sheet} k="price" raised />
+              </div>
+              {data.priceDate && (
+                <div className="fineprint mt-0.5">close {data.priceDate} · not a live quote</div>
+              )}
             </div>
+            <div className="strip-cell">
+              <div className="label flex flex-wrap items-center gap-1.5">
+                DCF model value {missing("dcf") && <UnavailableTag what="The DCF model value" />}
+              </div>
+              <div className="strip-figure mt-0.5">
+                {fmtUsd(data.modelValue, "dcf")}
+                <Fn sheet={sheet} k="model" raised />
+              </div>
+              {!pending && data.dcfRefusal && (
+                <div role="note" className="caveat mt-0.5">
+                  No DCF value: {data.dcfRefusal}
+                </div>
+              )}
+              {!pending && data.dcfAssumed && data.dcfAssumed.length > 0 && (
+                <div role="note" className="caveat mt-0.5">
+                  Rests on figures the filing did not report, assumed by the model:{" "}
+                  {data.dcfAssumed.join(", ")}.
+                </div>
+              )}
+              {!pending && data.dcfLimitations?.current_debt && (
+                <div role="note" className="caveat mt-0.5">
+                  Current debt may be missing from this value: see{" "}
+                  <a href="#limitations" className="link">What the DCF&apos;s inputs cannot show</a>,
+                  below.
+                </div>
+              )}
+              {!pending && data.dcfLimitations?.share_count && (
+                <div role="note" className="caveat mt-0.5">
+                  The year-end share count would lower this value: see{" "}
+                  <a href="#limitations" className="link">What the DCF&apos;s inputs cannot show</a>,
+                  below.
+                </div>
+              )}
+            </div>
+            <div className="strip-cell">
+              <div className="label">Model vs price</div>
+              <div
+                className="strip-figure mt-0.5"
+                title={
+                  data.modelVsPrice == null && !pending
+                    ? "Needs both a reported price and a DCF model value from the engine."
+                    : undefined
+                }
+              >
+                {!pending && data.modelVsPrice != null && data.modelVsPrice >= 0 ? "+" : ""}
+                {pending ? "…" : data.modelVsPrice == null ? "n/a" : pct(data.modelVsPrice)}
+                <Fn sheet={sheet} k="gap" raised />
+              </div>
+              {!pending && data.gapWithheld && (
+                <div role="note" className="caveat mt-0.5">
+                  {data.gapWithheld}
+                </div>
+              )}
+              {!pending && data.modelVsPrice == null && !data.gapWithheld && (
+                <div className="fineprint mt-0.5">
+                  {missing("meta") || missing("dcf")
+                    ? "Not compared: an engine call behind it failed."
+                    : "Not compared: it needs both a reported price and a DCF model value."}
+                </div>
+              )}
+              {data.valuationDate && (
+                <div
+                  className="fineprint mt-0.5"
+                  title="The DCF is struck at the base fiscal year-end (cash flows discounted to it, net debt as of it) and is not rolled forward, so the gap compares values on two different dates."
+                >
+                  valuation date {data.valuationDate} · price{" "}
+                  {data.priceDate ? `close ${data.priceDate}` : "latest quote"}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="mt-2.5 grid gap-x-10 gap-y-1.5 lg:grid-cols-2">
+            <p className="prose-note">
+              <strong className="font-semibold">Summary.</strong>{" "}
+              {pending ? "Loading…" : data.investmentThesis}
+            </p>
+            {missing("dcf") ? (
+              <p className="prose-note text-ink-soft">
+                The /dcf call failed, so there is no model value here. Nothing stands in for it.
+              </p>
+            ) : data.dcfRefusal ? null : (
+              <p className="prose-note text-ink-soft">
+                A mechanical DCF output from one fiscal year&apos;s reported figures at the
+                engine&apos;s assumptions (by default a generic 10% WACC and 3% terminal growth) — not
+                a price target, a rating or investment advice.
+              </p>
+            )}
           </div>
         </div>
 
-        {/* Financial Summary */}
-        <div className="flex items-center gap-2 mb-2 text-xs text-gray-500">
-          {data.fiscalYear ? `Financials · ${data.fiscalYear} 10-K (SEC EDGAR)` : "Financials"}
-          {missing("kpis") && <UnavailableTag what="The financial summary" />}
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-6">
-          {[
-            { label: `Revenue ${data.fiscalYear ?? "(FY)"}`, value: fmtMoney(data.revenueTTM, "kpis") },
-            {
-              label: "Revenue Growth",
-              value: fmtPct(data.revenueGrowth, "kpis"),
-              trend:
-                pending || data.revenueGrowth == null ? undefined : data.revenueGrowth > 0 ? "up" : "down",
-            },
-            { label: "Gross Margin", value: fmtPct(data.grossMargin, "kpis") },
-            { label: "Op Margin", value: fmtPct(data.operatingMargin, "kpis") },
-            { label: "Net Margin", value: fmtPct(data.netMargin, "kpis") },
-            {
-              label: "Reported FCF",
-              value: fmtMoney(data.fcf, "kpis"),
-              title: "Operating cash flow − CapEx, from the 10-K. Not the DCF's projected FCF, which starts from operating income and so keeps stock comp as a cost.",
-            },
-            { label: "EPS (Diluted)", value: fmtUsd(data.eps, "kpis") },
-          ].map((m) => (
-            <div key={m.label} className="metric-card">
-              <div className="text-xs uppercase tracking-wider text-gray-500 mb-1" title={m.title}>{m.label}</div>
-              <div className={clsx(
-                "text-lg font-bold tabular-nums",
-                m.trend === "up" && "text-accent-green",
-                m.trend === "down" && "text-accent-red",
-              )}>{m.value}</div>
+        {/* The statistical array: the reported lines, and the DCF worked from them */}
+        <div data-testid="financial-array" className="mt-5 grid gap-x-10 gap-y-6 lg:grid-cols-2">
+          <section aria-labelledby="financials-head">
+            <h3 id="financials-head" className="sect">
+              {data.fiscalYear ? `Financials · ${data.fiscalYear} 10-K (SEC EDGAR)` : "Financials"}
+              {missing("kpis") && <UnavailableTag what="The financial summary" />}
+            </h3>
+            <div className="scroll-x" tabIndex={0} role="region" aria-labelledby="financials-head">
+              <table className="array">
+                <thead>
+                  <tr>
+                    <th scope="col">Line</th>
+                    <th scope="col" className="num">{data.fiscalYear ?? "FY"}</th>
+                    <th scope="col" className="num">10-K, $M</th>
+                    <th scope="col" className="mark"><span className="sr-only">Note</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {([
+                    {
+                      label: `Revenue ${data.fiscalYear ?? "(FY)"}`,
+                      value: fmtMoney(data.revenueTTM, "kpis"),
+                      filed: data.revenueTTM == null ? null : fmtMillions(data.revenueTTM),
+                      note: "revenue",
+                    },
+                    { label: "Revenue Growth", value: fmtPct(data.revenueGrowth, "kpis"), note: "growth" },
+                    {
+                      label: "Gross Margin",
+                      value: fmtPct(data.grossMargin, "kpis"),
+                      filed: working(data.reported?.grossProfit, data.revenueTTM, data.grossMargin),
+                      note: "gross",
+                    },
+                    {
+                      label: "Op Margin",
+                      value: fmtPct(data.operatingMargin, "kpis"),
+                      filed: working(data.reported?.operatingIncome, data.revenueTTM, data.operatingMargin),
+                      note: "op",
+                    },
+                    {
+                      label: "Net Margin",
+                      value: fmtPct(data.netMargin, "kpis"),
+                      filed: working(data.reported?.netIncome, data.revenueTTM, data.netMargin),
+                      note: "net",
+                    },
+                    {
+                      label: "Reported FCF",
+                      value: fmtMoney(data.fcf, "kpis"),
+                      filed: data.fcf == null ? null : fmtMillions(data.fcf),
+                      title: "Operating cash flow − CapEx, from the 10-K. Not the DCF's projected FCF, which starts from operating income and so keeps stock comp as a cost.",
+                      note: "fcf",
+                    },
+                    { label: "EPS (Diluted)", value: fmtUsd(data.eps, "kpis"), note: "eps" },
+                  ] as { label: string; value: string; filed?: string | null; title?: string; note: NoteKey }[]).map((row) => (
+                    <tr key={row.note}>
+                      <th scope="row" title={row.title}>{row.label}</th>
+                      <td className="num figure">{row.value}</td>
+                      <td className="num worked">{row.filed}</td>
+                      <td className="mark"><Fn sheet={sheet} k={row.note} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          ))}
-        </div>
+          </section>
 
-        {/* The DCF's explicit years: engine output, from the /dcf response */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-          {([
-            { key: "revenue", title: "DCF projection: revenue", fill: "#3b82f6", note: "" },
-            {
-              key: "fcf",
-              title: "DCF projection: modelled FCF",
-              fill: "#10b981",
-              note: " · EBIT × (1 − tax) + D&A − CapEx − ΔNWC: stock comp stays a cost, unlike Reported FCF above (operating cash flow − CapEx)",
-            },
-          ] as const).map((chart) => (
-            <div key={chart.key} className="bg-panel border border-border rounded-lg p-4">
-              <h3 className="text-sm font-semibold mb-1 flex items-center gap-2">
-                <BarChart3 className="w-4 h-4" /> {chart.title}
-                {missing("dcf") && <UnavailableTag what="The DCF projection" />}
-              </h3>
-              <p className="text-xs text-gray-500 mb-3">
-                $M, per year after the valuation date · the model&apos;s output at the stated
-                assumptions, not a forecast and not reported history{chart.note}
-              </p>
-              {data.projection.length > 0 ? (
-                <ResponsiveContainer width="100%" height={220}>
-                  <BarChart data={data.projection}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1c2540" />
-                    <XAxis dataKey="period" stroke="#6b7280" tick={{ fontSize: 11 }} />
-                    <YAxis stroke="#6b7280" tick={{ fontSize: 11 }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}B`} />
-                    <Tooltip contentStyle={{ background: "#0f1525", border: "1px solid #1c2540", fontSize: "0.75rem" }}
-                      formatter={(v: number) => `$${Math.round(v).toLocaleString()}M`} />
-                    <Bar dataKey={chart.key} fill={chart.fill} radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              ) : (
-                <p className="py-8 text-center text-xs text-gray-500">
-                  {pending ? "…" : "No projection: the engine returned no DCF for this ticker."}
-                </p>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* DCF, sentiment, and what this dashboard does not show */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-          <div className="bg-panel border border-border rounded-lg p-5">
-            <h3 className="text-sm font-semibold flex items-center gap-2 mb-1">
-              <DollarSign className="w-4 h-4" /> DCF Valuation
+          <section aria-labelledby="dcf-head">
+            <h3 id="dcf-head" className="sect">
+              DCF Valuation
               {missing("dcf") && <UnavailableTag what="The DCF valuation" />}
             </h3>
-            <p className="text-xs text-gray-500 mb-3">
+            <p className="fineprint mt-0.5">
               {data.dcfRefusal
                 ? "Not valued: the engine refused this ticker"
                 : data.dcfBasis
@@ -628,131 +654,128 @@ export default function Home() {
                   {Object.keys(data.dcfAdjustments).length === 1 ? "" : "s"}
                 </span>
               )}
+              <Fn sheet={sheet} k="basis" raised />
             </p>
             {data.dcfRefusal && (
-              <p role="note" className="-mt-1 mb-3 text-[11px] text-orange-300">
+              <p role="note" className="caveat mt-1">
                 {data.dcfRefusal}
               </p>
             )}
             {data.dcfAssumed && data.dcfAssumed.length > 0 && (
-              <p role="note" className="-mt-1 mb-3 text-[11px] text-orange-300">
+              <p role="note" className="caveat mt-1">
                 Rests on figures the filing did not report, assumed by the model:{" "}
                 {data.dcfAssumed.join(", ")}.
               </p>
             )}
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between border-b border-border pb-2">
-                <span className="text-gray-500">Intrinsic Value</span>
-                <span className="font-bold tabular-nums">{fmtUsd(data.dcfIntrinsicValue, "dcf")}</span>
+            <div className="steps mt-1">
+              <div className="step step-head" aria-hidden="true">
+                <span>Step</span>
+                <span className="text-right">Value</span>
+                <span className="text-right">$M</span>
+                <span />
               </div>
-              <div className="flex justify-between border-b border-border pb-2">
-                <span className="text-gray-500">Enterprise Value</span>
-                <span className="font-bold tabular-nums">{fmtMoney(data.dcfEV, "dcf")}</span>
-              </div>
-              <div className="flex justify-between border-b border-border pb-2">
-                <span
-                  className="text-gray-500"
+              <dl>
+                <Step label="Enterprise Value" value={fmtMoney(data.dcfEV, "dcf")} millions={data.dcfEV} sheet={sheet} />
+                <Step
+                  op="−"
+                  label="Net Debt"
                   title="Total debt − cash and cash equivalents; marketable securities are not netted. Enterprise value − net debt = equity value; equity value ÷ shares = the value per share."
-                >
-                  Net Debt
-                </span>
-                <span className="font-bold tabular-nums">{fmtMoney(data.dcfNetDebt, "dcf")}</span>
-              </div>
-              <div className="flex justify-between border-b border-border pb-2">
-                <span className="text-gray-500">Equity Value</span>
-                <span className="font-bold tabular-nums">{fmtMoney(data.dcfEquity, "dcf")}</span>
-              </div>
-              <div className="flex justify-between border-b border-border pb-2">
-                <span className="text-gray-500">Shares</span>
-                <span className="font-bold tabular-nums">
-                  {show(data.dcfShares, (v) => `${v.toLocaleString("en-US", { maximumFractionDigits: 1 })}M`, "dcf")}
-                </span>
-              </div>
-              <div className="flex justify-between border-b border-border pb-2">
-                <span className="text-gray-500">WACC</span>
-                <span className="font-bold tabular-nums">{fmtPct(data.wacc, "dcf")}</span>
-              </div>
-              <div className="flex justify-between pb-2">
-                <span className="text-gray-500">Terminal Growth</span>
-                <span className="font-bold tabular-nums">{fmtPct(data.terminalGrowth, "dcf")}</span>
-              </div>
+                  value={fmtMoney(data.dcfNetDebt, "dcf")}
+                  millions={data.dcfNetDebt}
+                  sheet={sheet}
+                  note="netDebt"
+                />
+                <Step op="=" label="Equity Value" value={fmtMoney(data.dcfEquity, "dcf")} millions={data.dcfEquity} sheet={sheet} />
+                <Step
+                  op="÷"
+                  label="Shares"
+                  value={show(data.dcfShares, (v) => `${v.toLocaleString("en-US", { maximumFractionDigits: 1 })}M`, "dcf")}
+                  sheet={sheet}
+                  note="shares"
+                />
+                <Step op="=" label="Intrinsic Value" value={fmtUsd(data.dcfIntrinsicValue, "dcf")} sheet={sheet} total />
+                <Step label="WACC" value={fmtPct(data.wacc, "dcf")} sheet={sheet} note="wacc" />
+                <Step label="Terminal Growth" value={fmtPct(data.terminalGrowth, "dcf")} sheet={sheet} note="terminal" />
+              </dl>
             </div>
-          </div>
-
-          <div className="bg-panel border border-border rounded-lg p-5">
-            <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
-              Earnings Sentiment
-              {missing("sentiment") && <UnavailableTag what="The sentiment panel" />}
-              {!missing("sentiment") && data.sentimentSynthetic && <SyntheticTag />}
-            </h3>
-            <div className="text-center mb-4">
-              <div className={clsx(
-                "text-3xl font-bold mb-1",
-                data.sentimentLabel === "Bullish" && "text-accent-green",
-                data.sentimentLabel === "Bearish" && "text-accent-red",
-                data.sentimentLabel === "Neutral" && "text-gray-400",
-              )}>{pending ? "…" : data.sentimentLabel ?? "Unavailable"}</div>
-              <div className="text-xs text-gray-500">
-                Net score:{" "}
-                {show(data.sentimentScore, (v) => `${v >= 0 ? "+" : ""}${v.toFixed(3)}`, "sentiment")}
-              </div>
-            </div>
-            {!missing("sentiment") && data.sentimentSynthetic && (
-              <p className="mb-3 text-[11px] text-gray-500">
-                No real earnings call was analysed: these scores come from a boilerplate placeholder
-                that reads the same for every company. Live transcripts are a third-party scrape, off
-                unless the server opts in, and the page it reads may be unavailable.
-              </p>
-            )}
-            {!pending && data.sentimentUnavailable && (
-              <p role="note" className="mb-3 text-[11px] text-gray-500">
-                {data.sentimentUnavailable}
-              </p>
-            )}
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-500">Guidance</span>
-                <span
-                  title="Only an explicit action on guidance counts (raised, lowered, reaffirmed, initiated, withdrawn); results compared with guidance are not a change."
-                  className={clsx(
-                    "font-semibold",
-                    data.guidanceTone === "raised" && "text-accent-green",
-                    data.guidanceTone === "lowered" && "text-accent-red",
-                  )}
-                >
-                  {pending ? "…" : data.guidanceTone ? GUIDANCE_COPY[data.guidanceTone] : "Unavailable"}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Risk Mentions</span>
-                <span className="font-semibold">{show(data.riskMentions, String, "sentiment")}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-panel border border-border rounded-lg p-5">
-            <h3 className="text-sm font-semibold flex items-center gap-2 mb-3">
-              <Sparkles className="w-4 h-4" /> Not on this dashboard
-            </h3>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              Peer multiples, multi-year history, catalysts and risks: the API serves no endpoint for
-              them here, so this page shows none rather than invent them. Peer multiples are in the
-              live <code>/report</code>, for tickers with a curated peer set, from Yahoo Finance. Another
-              fiscal year is one call away: <code>/kpis/{"{ticker}"}?period=YYYY</code>.
-            </p>
-          </div>
+          </section>
         </div>
 
-        {limitationRows(data.dcfLimitations).length > 0 && (
-          <div className="bg-panel border border-border rounded-lg p-5 mb-6">
-            <h3 className="text-sm font-semibold flex items-center gap-2 mb-3">
-              <AlertTriangle className="w-4 h-4" aria-hidden="true" /> What the DCF&apos;s inputs
-              cannot show
-            </h3>
-            <ul className="space-y-2 text-xs text-gray-400 leading-relaxed">
-              {limitationRows(data.dcfLimitations).map((row) => (
-                <li key={row.key}>
-                  <strong className="text-gray-300">{row.label}:</strong>{" "}
+        {/* The DCF's explicit years: engine output, from the /dcf response */}
+        <div className="plots mt-7">
+          {([
+            { key: "revenue", title: "DCF projection: revenue", note: "" },
+            {
+              key: "fcf",
+              title: "DCF projection: modelled FCF",
+              note: " · EBIT × (1 − tax) + D&A − CapEx − ΔNWC: stock comp stays a cost, unlike Reported FCF above (operating cash flow − CapEx)",
+            },
+          ] as const).map((chart) => {
+            const values = data.projection.map((p) => p[chart.key]);
+            const low = Math.min(0, ...values);
+            const span = Math.max(0, ...values) - low || 1;
+            return (
+              <section key={chart.key} aria-labelledby={`projection-${chart.key}`}>
+                <h3 id={`projection-${chart.key}`} className="sect">
+                  {chart.title}
+                  {missing("dcf") && <UnavailableTag what="The DCF projection" />}
+                </h3>
+                <p className="fineprint mt-0.5">
+                  $M, per year after the valuation date · the model&apos;s output at the stated
+                  assumptions, not a forecast and not reported history{chart.note}
+                </p>
+                {data.projection.length > 0 ? (
+                  <div className="scroll-x mt-1" tabIndex={0} role="region" aria-labelledby={`projection-${chart.key}`}>
+                    <table className="plot">
+                      <thead>
+                        <tr>
+                          {data.projection.map((p) => (
+                            <th key={p.period} scope="col">{p.period}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr aria-hidden="true">
+                          {values.map((v, i) => (
+                            <td key={i}>
+                              <div className="plot-well">
+                                <div
+                                  className="plot-bar"
+                                  style={{
+                                    bottom: `${((Math.min(v, 0) - low) / span) * 100}%`,
+                                    height: `${(Math.abs(v) / span) * 100}%`,
+                                  }}
+                                />
+                                <div className="plot-base" style={{ bottom: `${(-low / span) * 100}%` }} />
+                              </div>
+                            </td>
+                          ))}
+                        </tr>
+                        <tr>
+                          {values.map((v, i) => (
+                            <td key={i} className="plot-figure">{fmtMillions(v)}</td>
+                          ))}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className="fineprint py-6 text-center">
+                    {pending ? "…" : "No projection: the engine returned no DCF for this ticker."}
+                  </p>
+                )}
+              </section>
+            );
+          })}
+        </div>
+
+        {limitations.length > 0 && (
+          <section id="limitations" aria-labelledby="limitations-head" className="mt-7 scroll-mt-4">
+            <h3 id="limitations-head" className="sect">What the DCF&apos;s inputs cannot show</h3>
+            <ul className="caveats mt-1.5">
+              {limitations.map((row) => (
+                <li key={row.key} className="prose-note">
+                  <strong className="font-semibold">{row.label}:</strong>{" "}
                   {linkParts(row.text).map((part, i) =>
                     part.href ? (
                       <a
@@ -760,30 +783,116 @@ export default function Home() {
                         href={part.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="break-all underline underline-offset-2 hover:text-accent-blue"
+                        className="link"
                       >
                         {part.text}
                       </a>
                     ) : (
-                      <span key={i}>{part.text}</span>
+                      <Whole key={i} text={part.text} />
                     ),
                   )}
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
+        )}
+
+        {/* Earnings sentiment, and what this note does not show */}
+        <div className="mt-7 grid gap-x-10 gap-y-6 lg:grid-cols-2">
+          <section aria-labelledby="sentiment-head">
+            <h3 id="sentiment-head" className="sect">
+              Earnings Sentiment
+              {missing("sentiment") && <UnavailableTag what="The sentiment panel" />}
+              {!missing("sentiment") && data.sentimentSynthetic && <SyntheticTag />}
+            </h3>
+            {!missing("sentiment") && data.sentimentSynthetic && (
+              <p className="prose-note mt-1">
+                No real earnings call was analysed: these scores come from a boilerplate placeholder
+                that reads the same for every company. Live transcripts are a third-party scrape, off
+                unless the server opts in, and the page it reads may be unavailable.
+              </p>
+            )}
+            {!pending && data.sentimentUnavailable && (
+              <p role="note" className="prose-note mt-1">
+                {data.sentimentUnavailable}
+              </p>
+            )}
+            <dl className="steps mt-1">
+              <div className="step step-pair">
+                <dt>Tone</dt>
+                <dd className="figure">{pending ? "…" : data.sentimentLabel ?? "Unavailable"}</dd>
+              </div>
+              <div className="step step-pair">
+                <dt>Net score</dt>
+                <dd className="figure">
+                  {show(data.sentimentScore, (v) => `${v >= 0 ? "+" : ""}${v.toFixed(3)}`, "sentiment")}
+                </dd>
+              </div>
+              <div className="step step-pair">
+                <dt>Guidance</dt>
+                <dd
+                  className="figure"
+                  title="Only an explicit action on guidance counts (raised, lowered, reaffirmed, initiated, withdrawn); results compared with guidance are not a change."
+                >
+                  {pending ? "…" : data.guidanceTone ? GUIDANCE_COPY[data.guidanceTone] : "Unavailable"}
+                </dd>
+              </div>
+              <div className="step step-pair">
+                <dt>Risk Mentions</dt>
+                <dd className="figure">{show(data.riskMentions, String, "sentiment")}</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section aria-labelledby="absent-head">
+            <h3 id="absent-head" className="sect">Not on this dashboard</h3>
+            <p className="prose-note mt-1">
+              Peer multiples, multi-year history, catalysts and risks: the API serves no endpoint for
+              them here, so this page shows none rather than invent them. Peer multiples are in the
+              live <code>/report</code>, for tickers with a curated peer set, from Yahoo Finance. Another
+              fiscal year is one call away: <code>/kpis/{"{ticker}"}?period=YYYY</code>.
+            </p>
+          </section>
+        </div>
+
+        {sheet.notes.length > 0 && (
+          <section id="notes" aria-labelledby="notes-head" className="mt-7">
+            <h3 id="notes-head" className="sect">Sources and notes</h3>
+            {sheet.filing && (
+              <p className="mb-2 mt-1 max-w-[72ch] text-[0.875rem] leading-[1.45]">
+                Unless a note names another, the financial figures come from <Whole text={sheet.filing} />.
+              </p>
+            )}
+            <ol className="notes">
+              {sheet.notes.map((note) => (
+                <li key={note.key} id={`note-${note.key}`}>
+                  <span className="note-label">{note.label}.</span> <Whole text={note.text} />{"\u00A0"}
+                  <a href={`#ref-${note.key}`} aria-label={`Back to the figure for note ${note.number}`} className="note-back">
+                    ↑
+                  </a>
+                </li>
+              ))}
+            </ol>
+            {data.modelValue != null && (
+              <p className="mt-2 max-w-[72ch] text-[0.875rem] leading-[1.45] text-ink-soft">
+                Enterprise value, equity value, the intrinsic value and the projection are model outputs,
+                and model vs price is computed from the price and the model value: none has a filing
+                reference of its own.
+              </p>
+            )}
+          </section>
         )}
         </>
         )}
 
-        <footer className="mt-12 pt-6 border-t border-border text-xs text-gray-500 flex justify-between">
-          <p>
+        <footer className="fineprint mt-8 flex flex-wrap justify-between gap-x-6 gap-y-1 border-t border-ink pt-2">
+          <p className="min-w-0 flex-1 basis-64">
             FinSight · equity research from SEC filings ·{" "}
             <a
               href="https://github.com/ROROK20/FinSight"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-accent-blue underline-offset-2 hover:underline"
+              className="link"
             >
               GitHub
             </a>{" "}
@@ -792,12 +901,12 @@ export default function Home() {
               href="https://github.com/ROROK20/FinSight/blob/main/LICENSE"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-accent-blue underline-offset-2 hover:underline"
+              className="link"
             >
               MIT License
             </a>{" "}
             ·{" "}
-            {modeCopy(mode, engineSaid).footer}
+            {badge.footer}
           </p>
           <p>v0.1.0</p>
         </footer>
